@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DCodex - Learn Python by Doing</title>
+    <title>DCodex - Run Code</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -36,18 +36,28 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>DCodex - Learn Python by Doing</h1>
-            <h2 class="tagline">Code. Run. Learn. Repeat.</h2>
-            <p class="quote"><span class="highlight">Keep coding, keep growing!</span></p>
-            <a href="projects.html" class="btn btn-primary">Get Started</a>
+    <!-- Interactive Code Editor -->
+    <section id="editor-section" class="section bg-light">
+        <h2 class="section-title">Interactive Code Runner</h2>
+        <div class="editor-layout">
+            <div class="editor-toolbar">
+                <span id="current-project-title">Scratchpad</span>
+                <div class="actions">
+                    <label for="upload-code" class="btn btn-outline">Upload Code</label>
+                    <input type="file" id="upload-code" accept=".py" style="display: none;">
+                    <button class="btn btn-primary" id="run-btn">Run Project</button>
+                </div>
+            </div>
+            <div id="monaco-container" class="monaco-box"></div>
+            
+            <div class="console-box">
+                <div class="console-header">Console Output (Terminal)</div>
+                <pre id="console-output">Loading Python environment... Please wait.</pre>
+            </div>
         </div>
     </section>
 
-
-
+    <!-- Footer -->
     <footer>
         <div class="contact-links">
             <a href="https://www.linkedin.com/in/dhanush-d-88155640a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">LinkedIn</a>

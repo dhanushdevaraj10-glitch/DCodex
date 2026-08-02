@@ -5,28 +5,48 @@ let pyodideInstance = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
     
-    // 1. Initialize Monaco Editor
-    // The Monaco script sets window.monaco when ready. We have to wait for it.
-    const checkMonaco = setInterval(() => {
-        if (window.monaco) {
-            clearInterval(checkMonaco);
-            initEditor();
-        }
-    }, 100);
+    // Check which page we are on based on existing containers
+    const hasEditor = document.getElementById('monaco-container') !== null;
+    const hasProjects = document.getElementById('projects-container') !== null;
 
-    // 2. Render Projects
-    renderProjects();
+    if (hasEditor) {
+        // 1. Initialize Monaco Editor
+        const checkMonaco = setInterval(() => {
+            if (window.monaco) {
+                clearInterval(checkMonaco);
+                initEditor();
+            }
+        }, 100);
 
-    // 4. Initialize Pyodide
-    initPyodide();
+        // 4. Initialize Pyodide
+        initPyodide();
 
-    // 5. Setup Listeners
-    setupListeners();
+        // 5. Setup Listeners
+        setupListeners();
+    }
+
+    if (hasProjects) {
+        // 2. Render Projects
+        renderProjects();
+    }
 });
 
 function initEditor() {
+    let initialCode = "print('Welcome to DCodex!')\n# Write your Python code here...";
+    let initialTitle = "Scratchpad";
+
+    // Check if we arrived here from the Projects page
+    const params = new URLSearchParams(window.location.search);
+    const projKey = params.get('project');
+    if (projKey && projectsData[projKey]) {
+        initialCode = projectsData[projKey].code;
+        initialTitle = projectsData[projKey].title;
+        const titleEl = document.getElementById('current-project-title');
+        if (titleEl) titleEl.innerText = initialTitle;
+    }
+
     editor = window.monaco.editor.create(document.getElementById('monaco-container'), {
-        value: "print('Welcome to DCodex!')\n# Write your Python code here...",
+        value: initialCode,
         language: 'python',
         theme: 'vs-light',
         automaticLayout: true,
@@ -40,11 +60,11 @@ async function initPyodide() {
     try {
         pyodideInstance = await loadPyodide({
             stdout: (msg) => {
-                consoleOut.innerHTML += msg + "\\n";
+                consoleOut.innerHTML += msg + "\n";
                 scrollToBottom();
             },
             stderr: (msg) => {
-                consoleOut.innerHTML += `<span style="color: red;">${msg}</span>\\n`;
+                consoleOut.innerHTML += `<span style="color: red;">${msg}</span>\n`;
                 scrollToBottom();
             }
         });
@@ -69,9 +89,9 @@ def custom_input(prompt=""):
 builtins.input = custom_input
         `);
 
-        consoleOut.innerHTML = "Python environment ready! 🚀\\n\\n";
+        consoleOut.innerHTML = "Python environment ready! 🚀\n\n";
     } catch (err) {
-        consoleOut.innerHTML = "Error loading Python environment.\\n";
+        consoleOut.innerHTML = "Error loading Python environment.\n";
         console.error(err);
     }
 }
@@ -109,13 +129,8 @@ function renderLeaderboard() {
 
 // Attach to window so onclick works
 window.loadProject = function(key) {
-    if (!editor) return;
-    const proj = projectsData[key];
-    document.getElementById('current-project-title').innerText = proj.title;
-    editor.setValue(proj.code);
-    
-    // Scroll to editor
-    document.getElementById('editor-section').scrollIntoView({ behavior: 'smooth' });
+    // Navigate to runcode.html with the project key in the URL
+    window.location.href = 'runcode.html?project=' + key;
 }
 
 function setupListeners() {
@@ -136,7 +151,7 @@ function setupListeners() {
         try {
             await pyodideInstance.runPythonAsync(code);
         } catch (err) {
-            consoleOut.innerHTML += `<span style="color: red;">${err}</span>\\n`;
+            consoleOut.innerHTML += `<span style="color: red;">${err}</span>\n`;
         }
     });
 
