@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function initEditor() {
     editor = window.monaco.editor.create(document.getElementById('monaco-container'), {
-        value: "print('Welcome to Codex!')\n# Write your Python code here...",
+        value: "print('Welcome to DCodex!')\n# Write your Python code here...",
         language: 'python',
         theme: 'vs-light',
         automaticLayout: true,

@@ -6,7 +6,7 @@ import contextlib
 from pathlib import Path
 
 # Set page configuration
-st.set_page_config(page_title="Codex", page_icon="🐍", layout="wide")
+st.set_page_config(page_title="DCodex", page_icon="🐍", layout="wide")
 
 # Custom CSS for some basic Streamlit tweaks (like hiding default main menu if desired, though Streamlit theme handles colors)
 st.markdown("""
@@ -45,9 +45,9 @@ if PROJECTS_DIR.exists():
     available_projects = [f.name for f in PROJECTS_DIR.glob("*.py")]
 
 if page == "Home":
-    st.title("Codex - Learn Python by Doing")
+    st.title("DCodex - Learn Python by Doing")
     st.subheader("Code. Run. Learn. Repeat.")
-    st.write("Welcome to Codex! The ultimate student-friendly platform to learn Python.")
+    st.write("Welcome to DCodex! The ultimate student-friendly platform to learn Python.")
     
     st.markdown("### Featured Python Projects")
     cols = st.columns(3)
@@ -89,7 +89,7 @@ elif page == "Run Code":
     
     st.info("💡 Note: Interactive `input()` functions (like the ones in your games) are currently not supported in the live web editor and will throw an EOFError. You can download the scripts to run them in your local terminal, or write non-interactive Python code below to test!")
     
-    default_code = "print('Hello, Codex!')"
+    default_code = "print('Hello, DCodex!')"
     
     # Check if a project was selected from the Home page
     if 'selected_code_file' in st.session_state:
@@ -116,8 +116,8 @@ elif page == "Run Code":
         st.code(s.getvalue(), language="text")
 
 elif page == "About":
-    st.title("About Codex")
-    st.write("Codex is built to provide an easy and interactive way to learn Python. With a focus on learning by doing, students can view real projects and write their own code right in the browser.")
+    st.title("About DCodex")
+    st.write("DCodex is built to provide an easy and interactive way to learn Python. With a focus on learning by doing, students can view real projects and write their own code right in the browser.")
 
 elif page == "Contact":
     st.title("Contact")
