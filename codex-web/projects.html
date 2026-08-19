@@ -12,20 +12,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">DCodex</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="runcode.html">Run Code</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="divine-blessing" style="font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                Sri Hethai Amman <span style="color: #ff66b2; font-size: 1.2rem;">☔</span>
+            </div>
+        </aside>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="logo">DCodex</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="runcode.html">Run Code</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <div class="divine-blessing" style="font-weight: 600; color: var(--text-dark); display: flex; align-items: center; gap: 5px;">
-            Sri Hethai Amman <span style="color: #ff66b2; font-size: 1.2rem;">☔</span>
-        </div>
-    </nav>
+        <!-- Main Content Area -->
+        <main class="main-content">
 
     <!-- Projects Section -->
     <section id="projects" class="section">
@@ -46,6 +49,9 @@
         </div>
         <p>&copy; 2026 DCodex. All rights reserved.</p>
     </footer>
+
+        </main>
+    </div>
 
     <!-- Main Logic -->
     <script type="module" src="main.js"></script>

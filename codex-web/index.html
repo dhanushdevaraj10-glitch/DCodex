@@ -22,42 +22,34 @@
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="logo">DCodex</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="runcode.html">Run Code</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <div class="divine-blessing" style="font-weight: 600; color: var(--text-dark); display: flex; align-items: center; gap: 5px;">
-            Sri Hethai Amman <span style="color: #ff66b2; font-size: 1.2rem;">☔</span>
-        </div>
-    </nav>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">DCodex</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="runcode.html">Run Code</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="divine-blessing" style="font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                Sri Hethai Amman <span style="color: #ff66b2; font-size: 1.2rem;">☔</span>
+            </div>
+        </aside>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>DCodex - Learn Python by Doing</h1>
-            <h2 class="tagline">Code. Run. Learn. Repeat.</h2>
-            <p class="quote"><span class="highlight">Keep coding, keep growing!</span></p>
-            <a href="projects.html" class="btn btn-primary">Get Started</a>
-        </div>
-    </section>
-
-
-
-    <footer>
-        <div class="contact-links">
-            <a href="https://www.linkedin.com/in/dhanush-d-88155640a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">LinkedIn</a>
-            <a href="https://github.com/dhanushdevaraj10-glitch" target="_blank">GitHub</a>
-            <a href="https://www.instagram.com/__dhan.zz_?igsh=MTZqeHcxMDd2a3RibA==" target="_blank">Instagram</a>
-            <a href="https://youtube.com/@dhanushdevaraj-n2v?si=GWrMFSw08q89Uqwl" target="_blank">YouTube</a>
-            <a href="https://discordapp.com/users/1516060739385688197" target="_blank">Discord</a>
-        </div>
-        <p>&copy; 2026 DCodex. All rights reserved.</p>
-    </footer>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section id="home" class="hero" style="background-image: url('/img/WhatsApp%20Image%202026-08-19%20at%207.41.04%20PM.jpeg'); background-size: cover; background-position: center; justify-content: center; align-items: center;">
+                <div class="hero-content" style="background: rgba(0, 0, 0, 0.75); padding: 50px; border-radius: var(--border-radius); backdrop-filter: blur(8px); max-width: 800px; text-align: center;">
+                    <h1>DCodex - Learn Python by Doing</h1>
+                    <h2 class="tagline">Code. Run. Learn. Repeat.</h2>
+                    <p class="quote"><span class="highlight">Keep coding, keep growing!</span></p>
+                    <a href="projects.html" class="btn btn-primary" style="margin-top: 20px;">Get Started</a>
+                </div>
+            </section>
+        </main>
+    </div>
 
     <!-- Main Logic -->
     <script type="module" src="main.js"></script>
