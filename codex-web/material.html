@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCodex - Python Learning Material</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        /* ===== MATERIAL PAGE STYLES ===== */
+        .material-layout { display: flex; flex-direction: column; flex: 1; }
+
+        /* Module navigator / TOC */
+        .module-nav {
+            background: #111;
+            padding: 16px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #FF6600;
+        }
+        .module-nav a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid #444;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .module-nav a:hover { background: #FF6600; color: #000; border-color: #FF6600; }
+
+        /* Module cards */
+        .material-content { padding: 40px 5%; display: flex; flex-direction: column; gap: 40px; background: #0d0d0d; }
+
+        .module-card {
+            background: #1a1a1a;
+            border-radius: 16px;
+            border-left: 5px solid #FF6600;
+            overflow: hidden;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+        }
+        .module-header {
+            background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .module-header:hover { background: linear-gradient(135deg, #262626, #333); }
+        .module-emoji { font-size: 2rem; }
+        .module-title-group h2 { font-size: 1.4rem; color: #FF6600; margin: 0; }
+        .module-title-group p { font-size: 0.85rem; color: #888; margin: 0; }
+        .module-toggle { margin-left: auto; color: #FF6600; font-size: 1.4rem; transition: transform 0.3s; }
+        .module-toggle.open { transform: rotate(180deg); }
+        .module-body { padding: 28px; display: none; }
+        .module-body.open { display: block; }
+
+        /* Topic sections inside module */
+        .topic { margin-bottom: 32px; }
+        .topic h3 { color: #FF6600; font-size: 1.1rem; border-bottom: 1px solid #2a2a2a; padding-bottom: 8px; margin-bottom: 14px; }
+        .topic h4 { color: #ffaa44; font-size: 0.95rem; margin: 14px 0 8px; }
+        .topic p, .topic li { color: #ccc; line-height: 1.8; font-size: 0.95rem; }
+        .topic ul, .topic ol { padding-left: 22px; color: #ccc; }
+        .topic ul li { margin-bottom: 4px; }
+
+        /* Code blocks */
+        .topic pre { border-radius: 10px; overflow: auto; margin: 12px 0; font-size: 0.88rem; }
+        .topic pre code { font-family: 'Fira Code', monospace; }
+
+        /* Inline code */
+        .topic code:not(pre code) {
+            background: #2a2a2a;
+            color: #FF6600;
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+        }
+
+        /* Tables */
+        .topic table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.88rem; }
+        .topic th { background: #FF6600; color: #000; padding: 10px 14px; text-align: left; }
+        .topic td { background: #222; color: #ccc; padding: 9px 14px; border-bottom: 1px solid #333; }
+        .topic tr:nth-child(even) td { background: #1e1e1e; }
+
+        /* Info boxes */
+        .info-box { background: #0f2027; border-left: 4px solid #00b4d8; padding: 14px 18px; border-radius: 8px; margin: 14px 0; color: #a8d8ea; font-size: 0.9rem; }
+        .tip-box { background: #0f1f0f; border-left: 4px solid #4caf50; padding: 14px 18px; border-radius: 8px; margin: 14px 0; color: #b2dfdb; font-size: 0.9rem; }
+        .warn-box { background: #1f1400; border-left: 4px solid #FF6600; padding: 14px 18px; border-radius: 8px; margin: 14px 0; color: #ffcc80; font-size: 0.9rem; }
+        .interview-box { background: #1a001a; border: 1px solid #ff66ff; padding: 14px 18px; border-radius: 8px; margin: 14px 0; }
+        .interview-box strong { color: #ff66ff; display: block; margin-bottom: 6px; }
+        .interview-box span { color: #e0aaff; font-size: 0.9rem; }
+
+        /* Badge pills */
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; margin: 2px; }
+        .badge-orange { background: #FF6600; color: #000; }
+        .badge-green { background: #2d6a4f; color: #b7e4c7; }
+        .badge-red { background: #7d1d1d; color: #ffb3b3; }
+        .badge-blue { background: #1d3557; color: #a8dadc; }
+
+        /* Divider */
+        .divider { border: none; border-top: 1px solid #2a2a2a; margin: 22px 0; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .module-nav { padding: 10px 4%; }
+            .material-content { padding: 20px 4%; }
+            .module-body { padding: 16px; }
+        }
+
+        /* Page title */
+        .material-hero {
+            background: linear-gradient(135deg, #1a0500, #0d0d0d);
+            padding: 50px 5% 30px;
+            border-bottom: 2px solid #FF6600;
+        }
+        .material-hero h1 { color: #FF6600; font-size: 2.2rem; margin-bottom: 8px; }
+        .material-hero p { color: #888; font-size: 1rem; }
+        .material-hero .stats { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+        .material-hero .stat { text-align: center; }
+        .material-hero .stat-num { font-size: 1.8rem; font-weight: 700; color: #FF6600; }
+        .material-hero .stat-lbl { font-size: 0.75rem; color: #888; }
+
+        /* Footer override for dark page */
+        footer { background: #111 !important; border-top: 1px solid #333; }
+        footer p, footer a { color: #888 !important; }
+        footer a:hover { color: #FF6600 !important; }
+    </style>
+</head>
+<body style="background:#0d0d0d;">
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">DCodex</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="material.html" style="background:#FF6600;color:#000;">Material</a></li>
+                <li><a href="runcode.html">Run Code</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="divine-blessing" style="font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px;">
+                Sri Hethai Amman <span style="color:#ff66b2;font-size:1.2rem;">☔</span>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main-content" style="background:#0d0d0d;">
+            <div class="material-layout">
+
+                <!-- Hero -->
+                <div class="material-hero">
+                    <h1>🐍 Python Learning Material</h1>
+                    <p>Complete structured notes from basics to advanced — crafted for students & interviews.</p>
+                    <div class="stats">
+                        <div class="stat"><div class="stat-num">20</div><div class="stat-lbl">Modules</div></div>
+                        <div class="stat"><div class="stat-num">100+</div><div class="stat-lbl">Topics</div></div>
+                        <div class="stat"><div class="stat-num">50+</div><div class="stat-lbl">Code Examples</div></div>
+                        <div class="stat"><div class="stat-num">∞</div><div class="stat-lbl">Practice Qs</div></div>
+                    </div>
+                </div>
+
+                <!-- Module Navigator -->
+                <nav class="module-nav">
+                    <a href="#m1">1 · Intro</a>
+                    <a href="#m2">2 · Keywords & Variables</a>
+                    <a href="#m3">3 · Operators</a>
+                    <a href="#m4">4 · Input/Output</a>
+                    <a href="#m5">5 · Data Types</a>
+                    <a href="#m6">6 · Slicing</a>
+                    <a href="#m7">7 · Conditionals</a>
+                    <a href="#m8">8 · Loops</a>
+                    <a href="#m9">9 · Built-in Functions</a>
+                    <a href="#m10">10 · Lists</a>
+                    <a href="#m11">11 · Tuples</a>
+                    <a href="#m12">12 · Sets</a>
+                    <a href="#m13">13 · Dictionaries</a>
+                    <a href="#m14">14 · Strings</a>
+                    <a href="#m15">15 · Functions</a>
+                    <a href="#m16">16 · Comprehensions</a>
+                    <a href="#m17">17 · Modules & Packages</a>
+                    <a href="#m18">18 · File Handling</a>
+                    <a href="#m19">19 · OOP</a>
+                    <a href="#m20">20 · Exception Handling</a>
+                </nav>
+
+                <!-- ==================== CONTENT ==================== -->
+                <div class="material-content">
+
+                    <!-- MODULE 1 -->
+                    <div class="module-card" id="m1">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🐍</span>
+                            <div class="module-title-group">
+                                <h2>Module 1 — Introduction to Python</h2>
+                                <p>History · Features · Why Python? · Advantages & Disadvantages</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body open">
+                            <div class="topic">
+                                <h3>📜 Python – History</h3>
+                                <table>
+                                    <tr><th>Aspect</th><th>Detail</th></tr>
+                                    <tr><td>Created by</td><td>Guido van Rossum</td></tr>
+                                    <tr><td>Year</td><td>1991</td></tr>
+                                    <tr><td>Named after</td><td>Monty Python's Flying Circus (comedy show)</td></tr>
+                                    <tr><td>Goal</td><td>Simple, readable, powerful language</td></tr>
+                                </table>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>⚡ Features of Python</h3>
+                                <ul>
+                                    <li>✅ Simple &amp; easy to learn</li>
+                                    <li>✅ Interpreted language</li>
+                                    <li>✅ High-level language</li>
+                                    <li>✅ Object-Oriented</li>
+                                    <li>✅ Dynamically typed</li>
+                                    <li>✅ Huge standard library</li>
+                                    <li>✅ Platform independent</li>
+                                    <li>✅ Open source</li>
+                                </ul>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🚀 Why Python is So Popular?</h3>
+                                <ul>
+                                    <li>Easy syntax (English-like)</li>
+                                    <li>Used in AI, ML, Data Science</li>
+                                    <li>Large community support</li>
+                                    <li>Thousands of libraries (NumPy, Pandas, TensorFlow)</li>
+                                    <li>Used by top companies (Google, Netflix, NASA)</li>
+                                    <li>Faster development time</li>
+                                </ul>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>👍 Advantages &nbsp;&nbsp; 👎 Disadvantages</h3>
+                                <table>
+                                    <tr><th>Advantages</th><th>Disadvantages</th></tr>
+                                    <tr><td>Beginner-friendly</td><td>Slower than C/C++</td></tr>
+                                    <tr><td>Less code, more output</td><td>Not good for mobile apps</td></tr>
+                                    <tr><td>Rapid development</td><td>Uses more memory</td></tr>
+                                    <tr><td>Huge library support</td><td>Not best for system-level programming</td></tr>
+                                    <tr><td>Works on all OS</td><td>Runtime errors due to dynamic typing</td></tr>
+                                </table>
+                            </div>
+                            <div class="interview-box">
+                                <strong>🎤 One-Line Interview Answer</strong>
+                                <span>Python is popular because of its simple syntax, powerful libraries, and wide use in AI, Data Science, and automation.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 2 -->
+                    <div class="module-card" id="m2">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🔑</span>
+                            <div class="module-title-group">
+                                <h2>Module 2 — Keywords, Variables &amp; Identifiers</h2>
+                                <p>Reserved words · Data storage · Naming rules</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>🔑 Keywords</h3>
+                                <p>Keywords are <strong>reserved words</strong> in a programming language. They have a fixed meaning and cannot be used as names.</p>
+                                <div class="info-box">Examples: <code>if</code> <code>else</code> <code>for</code> <code>while</code> <code>break</code> <code>continue</code> <code>class</code> <code>def</code> <code>return</code></div>
+                                <pre><code class="language-python">if = 10  # ❌ Error — 'if' is a keyword</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>📦 Variables</h3>
+                                <p>A variable is a <strong>name used to store data</strong> in memory. The value can change.</p>
+                                <pre><code class="language-python">age = 25
+name = "Naveen"
+# age, name → variables
+# 25, "Naveen" → values</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🏷️ Identifiers</h3>
+                                <p>Identifiers are names given to variables, functions, classes, and objects.</p>
+                                <pre><code class="language-python">total_marks = 450  # total_marks is an identifier</code></pre>
+                                <h4>Rules for Identifiers</h4>
+                                <table>
+                                    <tr><th>Rule</th><th>Valid</th><th>Invalid</th></tr>
+                                    <tr><td>Can contain letters, digits, underscore</td><td><code>name</code>, <code>_count</code>, <code>total1</code></td><td><code>1name</code>, <code>total-marks</code></td></tr>
+                                    <tr><td>Must start with letter or underscore</td><td><code>_value</code></td><td><code>1value</code></td></tr>
+                                    <tr><td>Cannot be a keyword</td><td><code>myif</code></td><td><code>if</code></td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>📊 Difference Table</h3>
+                                <table>
+                                    <tr><th>Term</th><th>Meaning</th><th>Example</th></tr>
+                                    <tr><td><span class="badge badge-blue">Keyword</span></td><td>Reserved word</td><td><code>if</code>, <code>for</code></td></tr>
+                                    <tr><td><span class="badge badge-orange">Variable</span></td><td>Stores value</td><td><code>age = 20</code></td></tr>
+                                    <tr><td><span class="badge badge-green">Identifier</span></td><td>Name of element</td><td><code>age</code>, <code>sum()</code></td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 3 -->
+                    <div class="module-card" id="m3">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">➕</span>
+                            <div class="module-title-group">
+                                <h2>Module 3 — Operators</h2>
+                                <p>Arithmetic · Comparison · Logical · Assignment · Bitwise · Practice Questions</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>➕ 1. Arithmetic Operators</h3>
+                                <table>
+                                    <tr><th>Operator</th><th>Name</th><th>Example (a=10, b=3)</th><th>Result</th></tr>
+                                    <tr><td><code>+</code></td><td>Addition</td><td><code>a + b</code></td><td>13</td></tr>
+                                    <tr><td><code>-</code></td><td>Subtraction</td><td><code>a - b</code></td><td>7</td></tr>
+                                    <tr><td><code>*</code></td><td>Multiplication</td><td><code>a * b</code></td><td>30</td></tr>
+                                    <tr><td><code>/</code></td><td>Division</td><td><code>a / b</code></td><td>3.333...</td></tr>
+                                    <tr><td><code>%</code></td><td>Modulo</td><td><code>a % b</code></td><td>1</td></tr>
+                                    <tr><td><code>**</code></td><td>Exponentiation</td><td><code>a ** b</code></td><td>1000</td></tr>
+                                    <tr><td><code>//</code></td><td>Floor Division</td><td><code>a // b</code></td><td>3</td></tr>
+                                </table>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>⚖️ 2. Comparison Operators</h3>
+                                <pre><code class="language-python">5 == 5    # True  — Equal to
+5 != 3    # True  — Not equal
+10 > 5    # True  — Greater than
+10 < 5    # False — Less than
+5 >= 5    # True  — Greater than or equal
+2 <= 1    # False — Less than or equal</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🧠 3. Logical Operators</h3>
+                                <pre><code class="language-python">(5 > 3 and 10 > 5)   # True  — both must be true
+(5 > 10 or 10 > 5)   # True  — at least one true
+not(5 > 3)           # False — reverses result</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>📝 4. Assignment Operators</h3>
+                                <table>
+                                    <tr><th>Operator</th><th>Example</th><th>Equivalent To</th></tr>
+                                    <tr><td><code>=</code></td><td><code>x = 5</code></td><td><code>x = 5</code></td></tr>
+                                    <tr><td><code>+=</code></td><td><code>x += 3</code></td><td><code>x = x + 3</code></td></tr>
+                                    <tr><td><code>-=</code></td><td><code>x -= 2</code></td><td><code>x = x - 2</code></td></tr>
+                                    <tr><td><code>*=</code></td><td><code>x *= 4</code></td><td><code>x = x * 4</code></td></tr>
+                                    <tr><td><code>/=</code></td><td><code>x /= 2</code></td><td><code>x = x / 2</code></td></tr>
+                                </table>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🔍 5. Identity &amp; Membership Operators</h3>
+                                <pre><code class="language-python"># Identity
+a is b        # True if same memory location
+a is not b    # True if different memory location
+
+# Membership
+"a" in "apple"      # True
+"z" not in "apple"  # True</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>💡 6. Bitwise Operators</h3>
+                                <pre><code class="language-python">a & b   # AND  — 1 if both bits are 1
+a | b   # OR   — 1 if one bit is 1
+a ^ b   # XOR  — 1 if only one bit is 1
+~a      # NOT  — inverts all bits</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🏋️ Practice Questions</h3>
+                                <h4>Basic</h4>
+                                <ol>
+                                    <li>Calculate 5 raised to power of 3 using an operator.</li>
+                                    <li>Divide 17 by 4 and get only the remainder.</li>
+                                    <li>What is the difference between <code>10/4</code> and <code>10//4</code>?</li>
+                                    <li>Check if <code>15 != 20</code> (result should be True).</li>
+                                    <li>Initialize <code>score = 100</code>, add 50 using assignment operator.</li>
+                                </ol>
+                                <h4>Advanced (Challenge)</h4>
+                                <ol>
+                                    <li>Find the largest of 3 numbers using ONLY operators (no if/else).</li>
+                                    <li>Swap two variables without a third variable using XOR: <code>a = a ^ b ^ (b := a)</code></li>
+                                    <li>Using only bitwise operators, compute <code>x * 10</code>. Hint: <code>(x&lt;&lt;3) + (x&lt;&lt;1)</code></li>
+                                    <li>Check palindrome using slicing: return <code>"PALIN"</code> or <code>"NOT"</code> using operator expressions.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 4 -->
+                    <div class="module-card" id="m4">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">💬</span>
+                            <div class="module-title-group">
+                                <h2>Module 4 — Input, Output &amp; Comments</h2>
+                                <p>input() · print() · sep · end · Comments</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>📥 Input Statement</h3>
+                                <pre><code class="language-python"># Simple input
+name = input("Enter your name: ")
+print(name)
+
+# Integer input
+age = int(input("Enter your age: "))
+
+# Multiple inputs
+a = int(input("Enter a: "))
+b = int(input("Enter b: "))
+print(a + b)</code></pre>
+                                <div class="warn-box">⚠️ Common Mistake: <code>input()</code> always returns a string! Use <code>int()</code> or <code>float()</code> to convert.</div>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>📤 Output Statement</h3>
+                                <pre><code class="language-python">print("Hello World")         # Print text
+x = 10; print(x)             # Print variable
+print(10, 20)                 # Multiple values
+print("Name is", "Naveen")   # Print with message
+print(1, 2, 3, sep="-")      # Output: 1-2-3
+print("Hello", end=" ")      # No newline
+print("World")               # Output: Hello World</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>💭 Comments</h3>
+                                <pre><code class="language-python"># Single-line comment
+x = 10  # Inline comment
+
+"""
+This is a
+multi-line comment
+(actually a docstring)
+"""
+
+# Complete program example:
+a = int(input("Enter first number: "))
+b = int(input("Enter second number: "))
+print("Sum is:", a + b)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 5 -->
+                    <div class="module-card" id="m5">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🗂️</span>
+                            <div class="module-title-group">
+                                <h2>Module 5 — Python Data Types</h2>
+                                <p>8 Categories · 14+ Data Types · int · float · str · list · dict · set · bytes · None</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>📊 Overview — 8 Categories</h3>
+                                <table>
+                                    <tr><th>Category</th><th>Data Types</th><th>Purpose</th></tr>
+                                    <tr><td>Numeric</td><td><code>int</code>, <code>float</code>, <code>complex</code></td><td>Numbers</td></tr>
+                                    <tr><td>Boolean</td><td><code>bool</code></td><td>True / False</td></tr>
+                                    <tr><td>String</td><td><code>str</code></td><td>Text</td></tr>
+                                    <tr><td>Sequence</td><td><code>list</code>, <code>tuple</code>, <code>range</code></td><td>Ordered collections</td></tr>
+                                    <tr><td>Mapping</td><td><code>dict</code></td><td>Key-value pairs</td></tr>
+                                    <tr><td>Set</td><td><code>set</code>, <code>frozenset</code></td><td>Unique, unordered</td></tr>
+                                    <tr><td>Binary</td><td><code>bytes</code>, <code>bytearray</code>, <code>memoryview</code></td><td>Raw binary data</td></tr>
+                                    <tr><td>None</td><td><code>NoneType</code></td><td>Absence of value</td></tr>
+                                </table>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🔢 Numeric &amp; Boolean</h3>
+                                <pre><code class="language-python">a = 10        # int
+b = 10.5      # float
+c = 2 + 3j    # complex
+
+x = True      # bool
+y = False</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>📦 Sequence Types</h3>
+                                <pre><code class="language-python">l = [1, 2, 3]          # list (mutable)
+t = (1, 2, 3)          # tuple (immutable)
+r = range(1, 5)        # range
+b = bytes([65, 66])    # bytes</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>🗺️ Mapping, Set &amp; Binary</h3>
+                                <pre><code class="language-python">d = {"id": 1, "name": "Naveen"}   # dict
+s = {1, 2, 3}                      # set
+fs = frozenset({1, 2, 3})         # frozenset (immutable)
+ba = bytearray([65, 66])          # bytearray (mutable)
+mv = memoryview(b"ABC")           # memoryview
+x = None                           # NoneType</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 6 -->
+                    <div class="module-card" id="m6">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">✂️</span>
+                            <div class="module-title-group">
+                                <h2>Module 6 — Slicing in Python</h2>
+                                <p>String · List · Tuple · Set · Dict · Range · Bytes</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>📐 Slicing Syntax</h3>
+                                <pre><code class="language-python">sequence[start : end : step]
+# start → begin (included)
+# end   → stop  (excluded)
+# step  → jump size</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>📝 String Slicing</h3>
+                                <pre><code class="language-python">s = "PYTHON"
+print(s[0])     # 'P'
+print(s[1:4])   # 'YTH'
+print(s[:3])    # 'PYT'
+print(s[3:])    # 'HON'
+print(s[-1])    # 'N'
+print(s[::-1])  # 'NOHTYP' (reverse)</code></pre>
+                                <div class="info-box">Strings are <strong>immutable</strong> — cannot change characters after creation.</div>
+                            </div>
+                            <div class="topic">
+                                <h3>📋 List Slicing (Mutable)</h3>
+                                <pre><code class="language-python">l = [10, 20, 30, 40, 50]
+print(l[1:4])   # [20, 30, 40]
+print(l[::-1])  # [50, 40, 30, 20, 10]
+l[0] = 99       # Allowed — list is mutable</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>📦 Tuple Slicing (Immutable)</h3>
+                                <pre><code class="language-python">t = (1, 2, 3, 4, 5)
+print(t[1:4])   # (2, 3, 4)
+print(t[::-1])  # (5, 4, 3, 2, 1)
+# t[0] = 100   # ❌ Error — immutable</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>🚫 Set &amp; Dict — No Slicing!</h3>
+                                <pre><code class="language-python">s = {1, 2, 3}
+# s[0]    # ❌ TypeError — unordered
+lst = list(s)
+print(lst[1:3])  # Workaround
+
+d = {"a": 1, "b": 2, "c": 3}
+keys = list(d.keys())
+print(keys[:2])  # ['a', 'b']</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>📊 Slicing Summary Table</h3>
+                                <table>
+                                    <tr><th>Data Type</th><th>Supports Slicing?</th></tr>
+                                    <tr><td>String</td><td>✅</td></tr>
+                                    <tr><td>List</td><td>✅</td></tr>
+                                    <tr><td>Tuple</td><td>✅</td></tr>
+                                    <tr><td>Range</td><td>✅</td></tr>
+                                    <tr><td>Bytes</td><td>✅</td></tr>
+                                    <tr><td>Set</td><td>❌</td></tr>
+                                    <tr><td>Dictionary</td><td>❌</td></tr>
+                                    <tr><td>Int / Float</td><td>❌</td></tr>
+                                </table>
+                            </div>
+                            <div class="tip-box">💡 <strong>Gold Point:</strong> <code>[::-1]</code> is the fastest way to reverse a sequence. End index is always excluded!</div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 7 -->
+                    <div class="module-card" id="m7">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🔀</span>
+                            <div class="module-title-group">
+                                <h2>Module 7 — Conditional Statements</h2>
+                                <p>if · if-else · if-elif-else · Nested if · Ternary Operator</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>1️⃣ if Statement</h3>
+                                <pre><code class="language-python">age = 20
+if age >= 18:
+    print("You are eligible to vote")</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>2️⃣ if – else Statement</h3>
+                                <pre><code class="language-python">num = 5
+if num % 2 == 0:
+    print("Even number")
+else:
+    print("Odd number")  # Output: Odd number</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>3️⃣ if – elif – else (Multiple Conditions)</h3>
+                                <pre><code class="language-python">marks = 78
+if marks >= 90:
+    print("Grade A")
+elif marks >= 75:
+    print("Grade B")  # Output: Grade B
+elif marks >= 50:
+    print("Grade C")
+else:
+    print("Fail")</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>4️⃣ Nested if</h3>
+                                <pre><code class="language-python">age = 20
+citizen = True
+if age >= 18:
+    if citizen:
+        print("You can vote")
+    else:
+        print("Not a citizen")
+else:
+    print("Underage")</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>5️⃣ Ternary Operator (One-line if-else)</h3>
+                                <pre><code class="language-python">num = 10
+result = "Positive" if num > 0 else "Negative"
+print(result)  # Positive</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>📊 Summary Table</h3>
+                                <table>
+                                    <tr><th>Statement</th><th>Purpose</th></tr>
+                                    <tr><td><code>if</code></td><td>One condition</td></tr>
+                                    <tr><td><code>if-else</code></td><td>Two conditions</td></tr>
+                                    <tr><td><code>if-elif-else</code></td><td>Multiple conditions</td></tr>
+                                    <tr><td>Nested if</td><td>Condition inside condition</td></tr>
+                                    <tr><td>Ternary</td><td>One-line condition</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 8 -->
+                    <div class="module-card" id="m8">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🔄</span>
+                            <div class="module-title-group">
+                                <h2>Module 8 — Loops in Python</h2>
+                                <p>for loop · while loop · break · continue · pass</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>🔁 for Loop</h3>
+                                <p>Used to iterate over a <strong>sequence</strong>. Handles initialization, condition checking, and incrementing automatically.</p>
+                                <pre><code class="language-python"># Print 1 to 5
+for i in range(1, 6):
+    print(i)
+
+# Loop through a list
+fruits = ["apple", "banana", "mango"]
+for f in fruits:
+    print(f)</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🔂 while Loop</h3>
+                                <p>Repeats as long as condition is <code>True</code>.</p>
+                                <pre><code class="language-python"># Print 1 to 5
+i = 1
+while i <= 5:
+    print(i)
+    i += 1
+
+# Sum of first 5 numbers
+i, total = 1, 0
+while i <= 5:
+    total += i
+    i += 1
+print("Sum =", total)  # Sum = 15
+
+# Reverse a number
+num, rev = 1234, 0
+while num > 0:
+    digit = num % 10
+    rev = rev * 10 + digit
+    num //= 10
+print("Reversed =", rev)  # 4321</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🛑 Loop Control Statements</h3>
+                                <table>
+                                    <tr><th>Statement</th><th>Description</th><th>Example</th></tr>
+                                    <tr><td><code>break</code></td><td>Stops the loop immediately</td><td><code>if i == 3: break</code></td></tr>
+                                    <tr><td><code>continue</code></td><td>Skips current iteration</td><td><code>if i == 3: continue</code></td></tr>
+                                    <tr><td><code>pass</code></td><td>Does nothing (placeholder)</td><td><code>pass</code></td></tr>
+                                </table>
+                                <pre><code class="language-python">for i in range(1, 6):
+    if i == 3:
+        continue  # skip 3
+    if i == 5:
+        break     # stop at 5
+    print(i)
+# Output: 1 2 4</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 9 -->
+                    <div class="module-card" id="m9">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🛠️</span>
+                            <div class="module-title-group">
+                                <h2>Module 9 — Built-in Functions</h2>
+                                <p>Type Conversion · Inspection · Math · Sequences · Binary &amp; Char</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>🔄 1. Type Conversion (9 functions)</h3>
+                                <table>
+                                    <tr><th>Function</th><th>Purpose</th><th>Example</th></tr>
+                                    <tr><td><code>int()</code></td><td>To integer</td><td><code>int("10") → 10</code></td></tr>
+                                    <tr><td><code>float()</code></td><td>To decimal</td><td><code>float(5) → 5.0</code></td></tr>
+                                    <tr><td><code>str()</code></td><td>To string</td><td><code>str(100) → "100"</code></td></tr>
+                                    <tr><td><code>bool()</code></td><td>To True/False</td><td><code>bool(1) → True</code></td></tr>
+                                    <tr><td><code>list()</code></td><td>To list</td><td><code>list("abc") → ['a','b','c']</code></td></tr>
+                                    <tr><td><code>tuple()</code></td><td>To tuple</td><td><code>tuple([1,2]) → (1,2)</code></td></tr>
+                                    <tr><td><code>set()</code></td><td>To set (no duplicates)</td><td><code>set([1,1,2]) → {1,2}</code></td></tr>
+                                    <tr><td><code>dict()</code></td><td>Create dictionary</td><td><code>dict(a=1, b=2)</code></td></tr>
+                                    <tr><td><code>complex()</code></td><td>Complex number</td><td><code>complex(1,2) → 1+2j</code></td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>🔍 2. Information &amp; Inspection</h3>
+                                <table>
+                                    <tr><th>Function</th><th>Purpose</th></tr>
+                                    <tr><td><code>type()</code></td><td>Data type of variable</td></tr>
+                                    <tr><td><code>id()</code></td><td>Unique memory address</td></tr>
+                                    <tr><td><code>len()</code></td><td>Length of sequence</td></tr>
+                                    <tr><td><code>dir()</code></td><td>All methods for a type</td></tr>
+                                    <tr><td><code>help()</code></td><td>Documentation</td></tr>
+                                    <tr><td><code>isinstance()</code></td><td>Check if variable is a type</td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>🔢 3. Math &amp; Logic</h3>
+                                <table>
+                                    <tr><th>Function</th><th>Purpose</th></tr>
+                                    <tr><td><code>abs()</code></td><td>Absolute value — <code>abs(-5) → 5</code></td></tr>
+                                    <tr><td><code>sum()</code></td><td>Sum of list</td></tr>
+                                    <tr><td><code>max() / min()</code></td><td>Largest / Smallest</td></tr>
+                                    <tr><td><code>round()</code></td><td>Round to decimals</td></tr>
+                                    <tr><td><code>pow()</code></td><td>Power function x^y</td></tr>
+                                    <tr><td><code>all()</code></td><td>True if ALL items are true</td></tr>
+                                    <tr><td><code>any()</code></td><td>True if ANY item is true</td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>📋 4. Sequence Handling</h3>
+                                <table>
+                                    <tr><th>Function</th><th>Purpose</th></tr>
+                                    <tr><td><code>sorted()</code></td><td>Returns new sorted list</td></tr>
+                                    <tr><td><code>reversed()</code></td><td>Iterator going backwards</td></tr>
+                                    <tr><td><code>enumerate()</code></td><td>Adds counter to iterable</td></tr>
+                                    <tr><td><code>zip()</code></td><td>Combines two lists</td></tr>
+                                    <tr><td><code>range()</code></td><td>Creates number sequence</td></tr>
+                                    <tr><td><code>filter()</code></td><td>Filters items by condition</td></tr>
+                                    <tr><td><code>map()</code></td><td>Applies function to every item</td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>🔡 5. Binary &amp; Character</h3>
+                                <pre><code class="language-python">chr(65)    # → 'A'  — int to Unicode character
+ord('A')   # → 65   — character to integer code</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 10 -->
+                    <div class="module-card" id="m10">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">📋</span>
+                            <div class="module-title-group">
+                                <h2>Module 10 — Python Lists</h2>
+                                <p>Ordered · Mutable · Indexed · Methods · Comprehension</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>📋 What is a List?</h3>
+                                <table>
+                                    <tr><th>Feature</th><th>Explanation</th></tr>
+                                    <tr><td>Ordered</td><td>Maintains insertion order</td></tr>
+                                    <tr><td>Mutable</td><td>Can modify elements</td></tr>
+                                    <tr><td>Indexed</td><td>Uses index 0, 1, 2…</td></tr>
+                                    <tr><td>Allows duplicates</td><td>Same values allowed</td></tr>
+                                    <tr><td>Heterogeneous</td><td>Mixed data types allowed</td></tr>
+                                </table>
+                                <pre><code class="language-python">a = []                    # empty list
+b = [1, 2, 3]
+c = [10, "Python", 3.5]  # mixed types
+d = list((1, 2, 3))      # using list()</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>🔧 List Methods (Important!)</h3>
+                                <pre><code class="language-python">l = [1, 2, 3]
+
+l.append(4)          # Add at end → [1,2,3,4]
+l.extend([5, 6])     # Add multiple → [1,2,3,4,5,6]
+l.insert(1, 100)     # Insert at index 1
+l.remove(100)        # Remove by value
+l.pop()              # Remove last
+l.pop(1)             # Remove by index
+l.clear()            # Remove all elements
+l.index(2)           # Get index of value 2
+l.count(2)           # Count occurrences
+l.sort()             # Sort in place
+l.sort(reverse=True) # Sort descending
+l.reverse()          # Reverse list
+b = l.copy()         # Shallow copy</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>💡 List Comprehension</h3>
+                                <pre><code class="language-python">squares = [x*x for x in range(5)]
+# [0, 1, 4, 9, 16]
+
+even = [x for x in range(10) if x % 2 == 0]
+# [0, 2, 4, 6, 8]</code></pre>
+                            </div>
+                            <div class="warn-box">⚠️ <strong>Interview Trap — Copying Lists!</strong><br>
+                                <code>b = a</code> → Same reference (changes affect both!)<br>
+                                <code>b = a.copy()</code> → True independent copy
+                            </div>
+                            <div class="topic">
+                                <h3>⚠️ Common Errors</h3>
+                                <table>
+                                    <tr><th>Error</th><th>Cause</th></tr>
+                                    <tr><td><code>IndexError</code></td><td>Invalid index</td></tr>
+                                    <tr><td><code>ValueError</code></td><td>Value not found</td></tr>
+                                    <tr><td><code>TypeError</code></td><td>Wrong data type</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 11 -->
+                    <div class="module-card" id="m11">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">📦</span>
+                            <div class="module-title-group">
+                                <h2>Module 11 — Python Tuples</h2>
+                                <p>Ordered · Immutable · Indexed · Only 2 Methods</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>📦 Tuple Creation</h3>
+                                <pre><code class="language-python">t = (10, 20, 30)          # normal
+t = 10, 20, 30            # without parentheses (packing)
+t = (10,)                 # ⚠️ single element — comma required!
+t = (1, 2.5, "hello", True)  # mixed types
+t = (1, (2, 3), 4)        # nested tuple</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>🔒 Tuple Immutability</h3>
+                                <pre><code class="language-python">t = (10, 20, 30)
+# t[1] = 50  # ❌ Error
+
+# Workaround — convert to list:
+l = list(t)
+l[1] = 50
+t = tuple(l)   # ✅ Works</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>⚙️ Tuple Methods (Only 2!)</h3>
+                                <table>
+                                    <tr><th>Method</th><th>Description</th><th>Example</th></tr>
+                                    <tr><td><code>count(x)</code></td><td>Count occurrences of x</td><td><code>(1,2,2).count(2) → 2</code></td></tr>
+                                    <tr><td><code>index(x)</code></td><td>First index of x</td><td><code>(1,2,3).index(3) → 2</code></td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>📌 Key Points</h3>
+                                <ul>
+                                    <li>Tuples are <strong>faster</strong> than lists (fixed memory block)</li>
+                                    <li>Can be used as <strong>dictionary keys</strong> (hashable)</li>
+                                    <li>Used for <strong>fixed data</strong> and <strong>performance-critical</strong> code</li>
+                                </ul>
+                                <pre><code class="language-python"># Tuple as dict key
+d = {(1,2): "point A", (3,4): "point B"}
+
+# Unpacking
+a, *b = (10, 20, 30, 40)
+# a=10, b=[20,30,40]</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 12 -->
+                    <div class="module-card" id="m12">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🔵</span>
+                            <div class="module-title-group">
+                                <h2>Module 12 — Sets &amp; Frozensets</h2>
+                                <p>Unordered · Unique elements · Set operations</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>🔵 Set</h3>
+                                <pre><code class="language-python">fruits = {"apple", "banana", "cherry", "apple"}
+# duplicate 'apple' removed → {'apple', 'banana', 'cherry'}
+
+fruits.add("orange")       # Add element
+fruits.remove("banana")    # Remove (error if missing)
+fruits.discard("grape")    # Safe remove (no error)
+
+# Set Operations
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+print(a | b)   # Union:              {1,2,3,4,5,6}
+print(a & b)   # Intersection:       {3,4}
+print(a - b)   # Difference:         {1,2}
+print(a ^ b)   # Symmetric Diff:     {1,2,5,6}
+
+# Membership test
+print(3 in a)  # True</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>❄️ Frozenset (Immutable Set)</h3>
+                                <pre><code class="language-python">fs = frozenset([1, 2, 3, 4, 2])  # duplicates removed
+# frozenset({1, 2, 3, 4})
+
+# fs.add(5)  # ❌ AttributeError — immutable!
+
+# Set operations still work
+a = frozenset([1, 2, 3])
+b = frozenset([3, 4, 5])
+print(a | b)  # frozenset({1,2,3,4,5})
+
+# Use as dictionary key (hashable)
+d = {frozenset([1,2]): "pair one-two"}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 13 -->
+                    <div class="module-card" id="m13">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">📖</span>
+                            <div class="module-title-group">
+                                <h2>Module 13 — Dictionaries</h2>
+                                <p>Key-Value pairs · Methods · Functions · Operators</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>📖 Dictionary Basics</h3>
+                                <pre><code class="language-python">student = {"name": "Naveen", "age": 22, "course": "Python"}
+print(student["name"])    # Naveen
+student["age"] = 23       # Update value
+del student["age"]        # Delete key</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>⚙️ Key Methods</h3>
+                                <table>
+                                    <tr><th>Method</th><th>Description</th></tr>
+                                    <tr><td><code>.keys()</code></td><td>All keys</td></tr>
+                                    <tr><td><code>.values()</code></td><td>All values</td></tr>
+                                    <tr><td><code>.items()</code></td><td>Key-value pairs as tuples</td></tr>
+                                    <tr><td><code>.get(key, default)</code></td><td>Get value; default if missing</td></tr>
+                                    <tr><td><code>.update(other)</code></td><td>Update from another dict</td></tr>
+                                    <tr><td><code>.pop(key)</code></td><td>Remove &amp; return value</td></tr>
+                                    <tr><td><code>.popitem()</code></td><td>Remove last inserted pair</td></tr>
+                                    <tr><td><code>.clear()</code></td><td>Remove all items</td></tr>
+                                    <tr><td><code>.copy()</code></td><td>Shallow copy</td></tr>
+                                    <tr><td><code>.setdefault(key, val)</code></td><td>Add if not present</td></tr>
+                                    <tr><td><code>.fromkeys(keys, val)</code></td><td>Create dict with default values</td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>🔢 Built-in Functions with Dict</h3>
+                                <pre><code class="language-python">student = {'Math': 90, 'Science': 85, 'English': 88}
+
+print(len(student))              # 3
+print(sum(student.values()))     # 263
+print(max(student.values()))     # 90
+print(min(student.values()))     # 85
+print(sorted(student))           # sorted list of keys
+print(str(student))              # string representation</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 14 -->
+                    <div class="module-card" id="m14">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">📝</span>
+                            <div class="module-title-group">
+                                <h2>Module 14 — Strings</h2>
+                                <p>Immutable · 30+ Methods · Formatting</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>📝 String Characteristics</h3>
+                                <ul>
+                                    <li><strong>Immutable</strong> — cannot be changed after creation</li>
+                                    <li><strong>Ordered</strong> — supports indexing and slicing</li>
+                                    <li>Supports iteration character by character</li>
+                                    <li>Escape characters: <code>\n</code> <code>\t</code> <code>\\</code> <code>\"</code></li>
+                                </ul>
+                            </div>
+                            <div class="topic">
+                                <h3>🔤 Case Methods</h3>
+                                <table>
+                                    <tr><th>Method</th><th>Example</th></tr>
+                                    <tr><td><code>upper()</code></td><td><code>'hello'.upper() → 'HELLO'</code></td></tr>
+                                    <tr><td><code>lower()</code></td><td><code>'HELLO'.lower() → 'hello'</code></td></tr>
+                                    <tr><td><code>title()</code></td><td><code>'hello world'.title() → 'Hello World'</code></td></tr>
+                                    <tr><td><code>capitalize()</code></td><td><code>'python'.capitalize() → 'Python'</code></td></tr>
+                                    <tr><td><code>swapcase()</code></td><td><code>'PyThOn'.swapcase() → 'pYtHoN'</code></td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>🔍 Search Methods</h3>
+                                <table>
+                                    <tr><th>Method</th><th>Description</th></tr>
+                                    <tr><td><code>find(sub)</code></td><td>Index of substring (-1 if not found)</td></tr>
+                                    <tr><td><code>rfind(sub)</code></td><td>Last index of substring</td></tr>
+                                    <tr><td><code>index(sub)</code></td><td>Like find() but raises error</td></tr>
+                                    <tr><td><code>count(sub)</code></td><td>Count occurrences</td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>✅ Validation Methods</h3>
+                                <table>
+                                    <tr><th>Method</th><th>Returns True if…</th></tr>
+                                    <tr><td><code>isalpha()</code></td><td>All alphabetic</td></tr>
+                                    <tr><td><code>isdigit()</code></td><td>All digits</td></tr>
+                                    <tr><td><code>isalnum()</code></td><td>Alphanumeric</td></tr>
+                                    <tr><td><code>isupper()</code></td><td>All uppercase</td></tr>
+                                    <tr><td><code>islower()</code></td><td>All lowercase</td></tr>
+                                    <tr><td><code>isspace()</code></td><td>Only whitespace</td></tr>
+                                    <tr><td><code>istitle()</code></td><td>Title case</td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>✂️ Manipulation Methods</h3>
+                                <table>
+                                    <tr><th>Method</th><th>Example</th></tr>
+                                    <tr><td><code>replace(old, new)</code></td><td><code>'hello'.replace('h','H') → 'Hello'</code></td></tr>
+                                    <tr><td><code>strip()</code></td><td>Remove spaces both sides</td></tr>
+                                    <tr><td><code>split()</code></td><td><code>'a,b,c'.split(',') → ['a','b','c']</code></td></tr>
+                                    <tr><td><code>join()</code></td><td><code>'-'.join(['a','b','c']) → 'a-b-c'</code></td></tr>
+                                    <tr><td><code>zfill(width)</code></td><td><code>'42'.zfill(5) → '00042'</code></td></tr>
+                                    <tr><td><code>center(width)</code></td><td>Center string in width</td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>⚙️ Binary Types</h3>
+                                <pre><code class="language-python">b = b"Hello"                   # bytes (immutable)
+b = bytearray(b"Hello")        # bytearray (mutable)
+b[0] = 65                      # change first byte → b'Aello'
+m = memoryview(bytes([10,20,30]))
+print(m[1])                    # 20 — no copy of data</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 15 -->
+                    <div class="module-card" id="m15">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">⚙️</span>
+                            <div class="module-title-group">
+                                <h2>Module 15 — Functions</h2>
+                                <p>User-defined · Lambda · enumerate() · zip() · map() · filter()</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>🔧 User-Defined Functions</h3>
+                                <pre><code class="language-python"># Basic syntax
+def function_name(parameters):
+    # body
+    return value
+
+# Simple function
+def greet():
+    print("Hello, Welcome to Python")
+greet()
+
+# With parameters
+def add(a, b):
+    print(a + b)
+add(5, 3)  # 8
+
+# With return
+def multiply(x, y):
+    return x * y
+result = multiply(4, 5)  # 20
+
+# Default argument
+def greet(name="User"):
+    print("Hello", name)
+greet()          # Hello User
+greet("Naveen")  # Hello Naveen
+
+# Multiple return values
+def calc(a, b):
+    return a + b, a - b
+s, d = calc(10, 5)  # s=15, d=5</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>⚡ Lambda Functions</h3>
+                                <pre><code class="language-python"># Syntax: lambda arguments : expression
+square = lambda x: x * x
+print(square(5))       # 25
+
+add = lambda a, b: a + b
+print(add(3, 4))       # 7</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🔢 enumerate()</h3>
+                                <pre><code class="language-python">names = ["Alice", "Bob", "Charlie"]
+for index, name in enumerate(names):
+    print(index, name)
+# 0 Alice, 1 Bob, 2 Charlie
+
+for index, name in enumerate(names, start=1):
+    print(index, name)
+# 1 Alice, 2 Bob, 3 Charlie</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🤐 zip()</h3>
+                                <pre><code class="language-python">names  = ["Alice", "Bob", "Charlie"]
+scores = [85, 90, 78]
+for name, score in zip(names, scores):
+    print(name, score)
+# Alice 85, Bob 90, Charlie 78</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🗺️ map() — Apply to every item</h3>
+                                <pre><code class="language-python">nums = [1, 2, 3, 4]
+result = map(lambda x: x * 2, nums)
+print(list(result))  # [2, 4, 6, 8]
+
+# Multiple lists
+a, b = [1,2,3], [4,5,6]
+print(list(map(lambda x,y: x+y, a, b)))  # [5,7,9]</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🔎 filter() — Select items by condition</h3>
+                                <pre><code class="language-python">nums = [1, 2, 3, 4, 5]
+result = filter(lambda x: x > 3, nums)
+print(list(result))  # [4, 5]
+
+# Only even numbers
+evens = filter(lambda x: x % 2 == 0, nums)
+print(list(evens))   # [2, 4]</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 16 -->
+                    <div class="module-card" id="m16">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🧩</span>
+                            <div class="module-title-group">
+                                <h2>Module 16 — Comprehensions</h2>
+                                <p>List · Set · Dict · Generator Expressions</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <pre><code class="language-python"># List Comprehension
+squares = [x**2 for x in range(5)]         # [0,1,4,9,16]
+even = [x for x in range(10) if x%2==0]    # [0,2,4,6,8]
+
+# Set Comprehension (unique values)
+nums = [1, 2, 2, 3, 4]
+unique = {x**2 for x in nums}             # {1,4,9,16}
+
+# Dictionary Comprehension
+sq_dict = {x: x**2 for x in range(5)}    # {0:0, 1:1, 2:4, 3:9, 4:16}
+
+# Generator Expression (memory efficient!)
+gen = (x**2 for x in range(5))
+print(list(gen))   # [0, 1, 4, 9, 16]</code></pre>
+                            </div>
+                            <div class="interview-box">
+                                <strong>🎤 One-Line Interview Answer</strong>
+                                <span>Python comprehensions (list, set, dict, and generator) provide a concise way to create collections in a single line of code.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 17 -->
+                    <div class="module-card" id="m17">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">📦</span>
+                            <div class="module-title-group">
+                                <h2>Module 17 — Modules &amp; Packages</h2>
+                                <p>Built-in · User-defined · External · Package structure</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>📄 What is a Module?</h3>
+                                <p>A module is a <strong>single Python file (.py)</strong> containing functions, variables, and classes. Every .py file = one module.</p>
+                                <pre><code class="language-python"># math_tools.py
+def add(a, b): return a + b
+def subtract(a, b): return a - b
+
+# main.py
+import math_tools
+print(math_tools.add(10, 5))       # 15
+print(math_tools.subtract(10, 5))  # 5</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>🏷️ Types of Modules</h3>
+                                <table>
+                                    <tr><th>Type</th><th>Examples</th></tr>
+                                    <tr><td>Built-in</td><td><code>math</code>, <code>random</code>, <code>datetime</code>, <code>os</code>, <code>sys</code></td></tr>
+                                    <tr><td>User-defined</td><td>Your own <code>.py</code> files</td></tr>
+                                    <tr><td>External (pip)</td><td><code>numpy</code>, <code>pandas</code>, <code>matplotlib</code></td></tr>
+                                </table>
+                                <pre><code class="language-python">import math
+print(math.sqrt(16))  # 4.0
+
+# Install external
+# pip install numpy
+import numpy as np
+print(np.array([1,2,3]))</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>📁 What is a Package?</h3>
+                                <p>A package is a <strong>folder containing multiple modules</strong> with an <code>__init__.py</code> file.</p>
+                                <pre><code class="language-python">math_package/
+├── __init__.py   ← makes it a package
+├── add.py
+└── sub.py
+
+# add.py
+def add(a, b): return a + b
+
+# main.py
+from math_package.add import add
+print(add(10, 5))  # 15</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>📊 Module vs Package</h3>
+                                <table>
+                                    <tr><th>Term</th><th>Meaning</th></tr>
+                                    <tr><td><code>Module</code></td><td>A single <code>.py</code> file</td></tr>
+                                    <tr><td><code>Package</code></td><td>A folder with multiple modules</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 18 -->
+                    <div class="module-card" id="m18">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">📂</span>
+                            <div class="module-title-group">
+                                <h2>Module 18 — File Handling</h2>
+                                <p>open() · read · write · append · binary · delete</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>📂 File Opening Modes</h3>
+                                <table>
+                                    <tr><th>Mode</th><th>Description</th></tr>
+                                    <tr><td><code>'r'</code></td><td>Read (default) — file must exist</td></tr>
+                                    <tr><td><code>'w'</code></td><td>Write — creates new or overwrites</td></tr>
+                                    <tr><td><code>'a'</code></td><td>Append — adds to end of file</td></tr>
+                                    <tr><td><code>'x'</code></td><td>Create — error if exists</td></tr>
+                                    <tr><td><code>'b'</code></td><td>Binary mode</td></tr>
+                                    <tr><td><code>'r+'</code></td><td>Read and write</td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>✍️ File Operations</h3>
+                                <pre><code class="language-python"># Write to file
+f = open("demo.txt", "w")
+f.write("Hello, this is my first file!\n")
+f.write("Python makes file handling easy.")
+f.close()
+
+# Read full file
+with open("demo.txt", "r") as f:
+    data = f.read()
+    print(data)
+
+# Read line by line
+with open("demo.txt", "r") as f:
+    for line in f:
+        print(line.strip())
+
+# Append to file
+import datetime
+with open("log.txt", "a") as log:
+    log.write(f"{datetime.datetime.now()} - Program run.\n")
+
+# Delete file
+import os
+os.remove("demo.txt")</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>⚙️ File Methods</h3>
+                                <table>
+                                    <tr><th>Method</th><th>Description</th></tr>
+                                    <tr><td><code>f.read(n)</code></td><td>Read n characters</td></tr>
+                                    <tr><td><code>f.readline()</code></td><td>Read one line</td></tr>
+                                    <tr><td><code>f.readlines()</code></td><td>Read all lines into list</td></tr>
+                                    <tr><td><code>f.write(s)</code></td><td>Write a string</td></tr>
+                                    <tr><td><code>f.seek(n)</code></td><td>Move cursor to position</td></tr>
+                                    <tr><td><code>f.tell()</code></td><td>Current cursor position</td></tr>
+                                    <tr><td><code>f.close()</code></td><td>Close file</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 19 -->
+                    <div class="module-card" id="m19">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🏗️</span>
+                            <div class="module-title-group">
+                                <h2>Module 19 — Object-Oriented Programming</h2>
+                                <p>Class · Object · Constructor · Inheritance · Polymorphism · Encapsulation · Abstraction · Generators · Decorators</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>🏛️ Class &amp; Object</h3>
+                                <pre><code class="language-python">class Student:
+    school = "ABC School"  # Class variable (shared)
+
+    def __init__(self, name, marks):
+        self.name = name    # Instance variable (unique)
+        self.marks = marks
+
+    def show(self):
+        print(f"Name: {self.name}, Marks: {self.marks}")
+
+s1 = Student("Naveen", 90)
+s2 = Student("Kumar", 85)
+s1.show()  # Name: Naveen, Marks: 90</code></pre>
+                                <div class="info-box"><code>self</code> refers to the current object. Without it, Python doesn't know which object's data we're accessing.</div>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🔨 Constructor</h3>
+                                <pre><code class="language-python"># Default Constructor
+class Demo:
+    def __init__(self):
+        print("Object created")
+d = Demo()
+
+# Parameterized Constructor
+class Car:
+    def __init__(self, brand):
+        self.brand = brand
+c1 = Car("BMW")
+c2 = Car("Audi")
+
+# Default value in Constructor
+class User:
+    def __init__(self, role="Guest"):
+        self.role = role
+u1 = User()         # Guest
+u2 = User("Admin")  # Admin</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🧬 Inheritance (5 Types)</h3>
+                                <pre><code class="language-python"># Single
+class Animal:
+    def sound(self): print("Animal sound")
+class Dog(Animal):
+    def bark(self): print("Woof!")
+
+# Multiple
+class Father:
+    def money(self): print("Father has money")
+class Mother:
+    def love(self): print("Mother gives love")
+class Child(Father, Mother):
+    def play(self): print("Child plays")
+
+# Multilevel
+class Grandfather:
+    def house(self): print("House")
+class Father(Grandfather):
+    def car(self): print("Car")
+class Son(Father):
+    def bike(self): print("Bike")
+
+# Hierarchical
+class Parent:
+    def home(self): print("Home")
+class Son(Parent): pass
+class Daughter(Parent): pass</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🎭 Polymorphism</h3>
+                                <pre><code class="language-python"># Method Overriding
+class Animal:
+    def sound(self): print("Animal makes sound")
+class Dog(Animal):
+    def sound(self): print("Dog barks")
+class Cat(Animal):
+    def sound(self): print("Cat meows")
+
+d = Dog(); c = Cat()
+d.sound()  # Dog barks
+c.sound()  # Cat meows
+
+# Polymorphism with loop
+for x in (Dog(), Cat()):
+    x.sound()</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🔐 Encapsulation</h3>
+                                <table>
+                                    <tr><th>Modifier</th><th>Syntax</th><th>Access</th></tr>
+                                    <tr><td>Public</td><td><code>variable</code></td><td>Anywhere</td></tr>
+                                    <tr><td>Protected</td><td><code>_variable</code></td><td>Class &amp; subclass</td></tr>
+                                    <tr><td>Private</td><td><code>__variable</code></td><td>Class only (name mangling)</td></tr>
+                                </table>
+                                <pre><code class="language-python">class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance  # private
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+
+    def get_balance(self):        # getter
+        return self.__balance
+
+acc = BankAccount(5000)
+acc.deposit(2000)
+print(acc.get_balance())  # 7000
+# acc.__balance → ❌ AttributeError</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🎭 Abstraction (ABC)</h3>
+                                <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class PaymentGateway(ABC):
+    @abstractmethod
+    def pay(self, amount):
+        pass
+
+class GooglePay(PaymentGateway):
+    def pay(self, amount):
+        print(f"Paid ₹{amount} using Google Pay")
+
+class PhonePe(PaymentGateway):
+    def pay(self, amount):
+        print(f"Paid ₹{amount} using PhonePe")
+
+def process(p): p.pay(500)
+process(GooglePay())  # Paid ₹500 using Google Pay
+process(PhonePe())    # Paid ₹500 using PhonePe</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>⚡ Generators</h3>
+                                <pre><code class="language-python">def count_up_to(n):
+    count = 1
+    while count <= n:
+        yield count   # pauses and returns value
+        count += 1
+
+for num in count_up_to(5):
+    print(num)   # 1 2 3 4 5
+
+# Using next()
+gen = count_up_to(3)
+print(next(gen))  # 1
+print(next(gen))  # 2</code></pre>
+                            </div>
+                            <hr class="divider">
+                            <div class="topic">
+                                <h3>🎀 Decorators</h3>
+                                <pre><code class="language-python">def my_decorator(func):
+    def wrapper():
+        print("Before function")
+        func()
+        print("After function")
+    return wrapper
+
+@my_decorator
+def greet():
+    print("Hello, Naveen!")
+
+greet()
+# Before function
+# Hello, Naveen!
+# After function</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 20 -->
+                    <div class="module-card" id="m20">
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <span class="module-emoji">🛡️</span>
+                            <div class="module-title-group">
+                                <h2>Module 20 — Exception Handling</h2>
+                                <p>try · except · else · finally · raise · Custom Exceptions</p>
+                            </div>
+                            <span class="module-toggle">▼</span>
+                        </div>
+                        <div class="module-body">
+                            <div class="topic">
+                                <h3>⚠️ Common Exceptions</h3>
+                                <table>
+                                    <tr><th>Exception</th><th>Cause</th></tr>
+                                    <tr><td><code>ZeroDivisionError</code></td><td>Divide by zero</td></tr>
+                                    <tr><td><code>ValueError</code></td><td>Wrong value (e.g., int("abc"))</td></tr>
+                                    <tr><td><code>TypeError</code></td><td>Wrong data type</td></tr>
+                                    <tr><td><code>IndexError</code></td><td>Invalid list index</td></tr>
+                                    <tr><td><code>KeyError</code></td><td>Dictionary key missing</td></tr>
+                                    <tr><td><code>FileNotFoundError</code></td><td>File does not exist</td></tr>
+                                </table>
+                            </div>
+                            <div class="topic">
+                                <h3>🛡️ Full Exception Structure</h3>
+                                <pre><code class="language-python">try:
+    n = int(input("Enter number: "))
+    print(100 / n)
+
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+
+except ValueError:
+    print("Invalid input — numbers only!")
+
+else:
+    print("Calculation done successfully")  # runs if no exception
+
+finally:
+    print("Program ended")  # always runs</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>🚀 raise — Manually Throw Exception</h3>
+                                <pre><code class="language-python">age = int(input("Enter age: "))
+if age < 18:
+    raise ValueError("Age must be 18 or above")
+print("Eligible")</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>🏗️ Custom Exception</h3>
+                                <pre><code class="language-python">class LowBalanceError(Exception):
+    pass
+
+balance = 500
+try:
+    withdraw = 1000
+    if withdraw > balance:
+        raise LowBalanceError("Insufficient balance")
+except LowBalanceError as e:
+    print(e)  # Insufficient balance</code></pre>
+                            </div>
+                            <div class="topic">
+                                <h3>🏋️ Practice Questions</h3>
+                                <ol>
+                                    <li>Handle division by zero using try-except.</li>
+                                    <li>Handle invalid input when user enters a string instead of a number.</li>
+                                    <li>Access a list element by user-given index and handle <code>IndexError</code>.</li>
+                                    <li>Open a file named <code>data.txt</code> and handle <code>FileNotFoundError</code>.</li>
+                                    <li>Write a program that handles both <code>ZeroDivisionError</code> and <code>ValueError</code>.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- end material-content -->
+
+                <!-- Footer -->
+                <footer>
+                    <div class="contact-links">
+                        <a href="https://github.com/dhanushdevaraj10-glitch" target="_blank">GitHub</a>
+                        <a href="https://www.linkedin.com/in/dhanush-d-88155640a" target="_blank">LinkedIn</a>
+                    </div>
+                    <p>© 2026 DCodex. All rights reserved.</p>
+                </footer>
+
+            </div><!-- end material-layout -->
+        </main>
+    </div>
+
+    <script>
+        // Initialize highlight.js
+        hljs.highlightAll();
+
+        // Toggle module open/close
+        function toggleModule(header) {
+            const body = header.nextElementSibling;
+            const toggle = header.querySelector('.module-toggle');
+            body.classList.toggle('open');
+            toggle.classList.toggle('open');
+        }
+
+        // Open first module by default
+        document.querySelector('.module-body.open') && null;
+    </script>
+</body>
+</html>
