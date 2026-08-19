@@ -346,6 +346,7 @@ footer {
     padding: 30px;
     background-color: var(--text-dark);
     color: #ffffff;
+    margin-top: auto; /* Pushes footer to the bottom of the screen */
 }
 
 .contact-links {
