@@ -573,6 +573,60 @@ footer p {
 }
 
 /* Responsive / Mobile View */
+
+/* ========================================================
+   WINDOWS / DESKTOP SCREEN STYLES (min-width: 769px)
+   Keeps Windows screen 100% UNCHANGED and pristine
+   ======================================================== */
+@media (min-width: 769px) {
+    /* Hide all mobile-specific elements on desktop */
+    .mobile-only {
+        display: none !important;
+    }
+
+    /* Ensure desktop sidebar blessing is visible at bottom */
+    .sidebar .desktop-blessing {
+        display: flex !important;
+        margin-top: auto;
+        text-align: center;
+        font-size: 0.95rem;
+        font-weight: 600;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        color: #dddddd !important;
+    }
+
+    /* Hide hamburger and mobile topbar elements on desktop */
+    .menu-toggle,
+    .sidebar .mobile-actions,
+    .sidebar .mobile-blessing,
+    .menu-brand-header {
+        display: none !important;
+    }
+
+    /* Material Page on Desktop: show original pill nav and all 20 module cards */
+    .module-nav.desktop-only,
+    .module-nav {
+        display: flex !important;
+    }
+
+    .module-directory,
+    #modules-directory-view,
+    .module-view-topbar,
+    .module-bottom-nav {
+        display: none !important;
+    }
+
+    .material-content .module-card {
+        display: block !important;
+    }
+
+    .material-hero {
+        display: block !important;
+    }
+}
+
 @media (max-width: 768px) {
     html, body {
         overflow-x: hidden;
