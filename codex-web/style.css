@@ -576,15 +576,15 @@ footer p {
 
 /* ========================================================
    WINDOWS / DESKTOP SCREEN STYLES (min-width: 769px)
-   Keeps Windows screen 100% UNCHANGED and pristine
+   Keeps Home Page on Windows screen 100% original
    ======================================================== */
 @media (min-width: 769px) {
-    /* Hide all mobile-specific elements on desktop */
+    /* Hide mobile-only elements on desktop (home typewriter and home footer) */
     .mobile-only {
         display: none !important;
     }
 
-    /* Ensure desktop sidebar blessing is visible at bottom */
+    /* Ensure desktop sidebar blessing is visible at bottom of sidebar on desktop */
     .sidebar .desktop-blessing {
         display: flex !important;
         margin-top: auto;
@@ -603,27 +603,6 @@ footer p {
     .sidebar .mobile-blessing,
     .menu-brand-header {
         display: none !important;
-    }
-
-    /* Material Page on Desktop: show original pill nav and all 20 module cards */
-    .module-nav.desktop-only,
-    .module-nav {
-        display: flex !important;
-    }
-
-    .module-directory,
-    #modules-directory-view,
-    .module-view-topbar,
-    .module-bottom-nav {
-        display: none !important;
-    }
-
-    .material-content .module-card {
-        display: block !important;
-    }
-
-    .material-hero {
-        display: block !important;
     }
 }
 
