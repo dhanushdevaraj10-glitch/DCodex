@@ -5,6 +5,7 @@ let pyodideInstance = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
     initMobileMenu();
+    initBlessingTypewriter();
     
     // Check which page we are on based on existing containers
     const hasEditor = document.getElementById('monaco-container') !== null;
@@ -230,3 +231,35 @@ window.toggleMenu = function(e) {
         }
     }
 };
+
+function initBlessingTypewriter() {
+    const el = document.getElementById('home-typewriter-text');
+    if (!el) return;
+    const fullText = "Sri Hethai Amman ☔";
+    let charIndex = 0;
+    let isDeleting = false;
+    el.textContent = "";
+
+    function tick() {
+        if (!isDeleting) {
+            charIndex++;
+            el.textContent = fullText.slice(0, charIndex);
+            if (charIndex === fullText.length) {
+                isDeleting = true;
+                setTimeout(tick, 7000); // Hold for 7s (total cycle ~10s)
+            } else {
+                setTimeout(tick, 75);
+            }
+        } else {
+            charIndex--;
+            el.textContent = fullText.slice(0, charIndex);
+            if (charIndex === 0) {
+                isDeleting = false;
+                setTimeout(tick, 600);
+            } else {
+                setTimeout(tick, 35);
+            }
+        }
+    }
+    setTimeout(tick, 300);
+}

@@ -274,28 +274,42 @@ h1, h2, h3 {
     transform: translateY(-2px);
 }
 
-/* Home Blessing Text (Below Get Started card) */
-.home-blessing-text {
-    margin-top: 18px;
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 600;
-    text-align: center;
-    letter-spacing: 0.5px;
-    z-index: 2;
+/* Home Blessing Section & Centered Typewriter */
+.home-blessing-container {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    user-select: none;
-    max-width: 350px;
     width: 100%;
+    min-height: 80px;
+    padding: 12px 16px;
+    z-index: 2;
 }
 
-.home-blessing-text .umbrella-icon {
+.home-blessing-text {
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+}
+
+.typewriter-cursor {
+    color: var(--primary-color);
+    font-weight: 700;
     font-size: 1.15rem;
-    color: #ff66b2;
-    filter: drop-shadow(0 0 6px rgba(255, 102, 178, 0.4));
+    margin-left: 2px;
+    animation: cursorBlink 0.75s step-end infinite;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 
@@ -848,8 +862,9 @@ footer p {
 
     /* Home Page Hero Section - Tightly Aligned on Mobile (Image 4 Gap Fixed) */
     .hero {
+        flex: 1;
         min-height: auto;
-        padding: 10px 16px 36px;
+        padding: 10px 16px 16px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -896,21 +911,28 @@ footer p {
         font-size: 0.9rem;
     }
 
+    .home-blessing-container {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 80px;
+        padding: 16px 12px;
+    }
+
     .home-blessing-text {
-        margin-top: 20px;
-        margin-bottom: 6px;
-        font-size: 0.95rem;
+        font-size: 0.98rem;
         font-weight: 600;
         color: #ffffff;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
-        width: 100%;
-        max-width: 340px;
-        margin-left: auto;
-        margin-right: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .home-blessing-text .umbrella-icon {
-        font-size: 1.15rem;
+    .typewriter-cursor {
+        font-size: 1.1rem;
     }
 
 
