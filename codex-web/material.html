@@ -114,9 +114,37 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .module-nav { padding: 10px 4%; }
-            .material-content { padding: 20px 4%; }
-            .module-body { padding: 16px; }
+            .module-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 10px 12px;
+                gap: 8px;
+                scrollbar-width: none;
+                top: 0;
+            }
+            .module-nav::-webkit-scrollbar { display: none; }
+            .module-nav a { flex: 0 0 auto; font-size: 0.78rem; padding: 6px 12px; }
+            .material-hero { padding: 28px 16px 20px; }
+            .material-hero h1 { font-size: 1.5rem; margin-bottom: 8px; }
+            .material-hero p { font-size: 0.88rem; line-height: 1.5; }
+            .material-hero .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 14px; }
+            .material-hero .stat-num { font-size: 1.5rem; }
+            .material-hero .stat-lbl { font-size: 0.72rem; }
+            .material-content { padding: 20px 12px; gap: 20px; }
+            .module-card { border-radius: 12px; }
+            .module-header { padding: 14px 16px; gap: 12px; }
+            .module-emoji { font-size: 1.5rem; }
+            .module-title-group h2 { font-size: 1.05rem; }
+            .module-title-group p { font-size: 0.75rem; }
+            .module-toggle { font-size: 1.2rem; }
+            .module-body { padding: 16px 14px; }
+            .topic h3 { font-size: 1.02rem; }
+            .topic p, .topic li { font-size: 0.9rem; }
+            .topic pre { font-size: 0.82rem; padding: 10px; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .topic table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 0.82rem; margin: 12px 0; }
+            .topic th, .topic td { padding: 8px 10px; white-space: nowrap; }
+            .info-box, .tip-box, .warn-box, .interview-box { padding: 12px 14px; font-size: 0.85rem; margin: 12px 0; word-break: break-word; }
         }
 
         /* Page title */
@@ -131,29 +159,293 @@
         .material-hero .stat { text-align: center; }
         .material-hero .stat-num { font-size: 1.8rem; font-weight: 700; color: #FF6600; }
         .material-hero .stat-lbl { font-size: 0.75rem; color: #888; }
+    
+        /* ===== MODULE DIRECTORY (IMAGE 1 REFERENCE) ===== */
+        .module-directory {
+            padding: 30px 5% 50px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .directory-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .directory-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .directory-badge {
+            background: rgba(255, 102, 0, 0.15);
+            border: 1px solid rgba(255, 102, 0, 0.45);
+            color: #FF6600;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+        .directory-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
-        /* Footer override for dark page */
-        footer { background: #111 !important; border-top: 1px solid #333; }
-        footer p, footer a { color: #888 !important; }
-        footer a:hover { color: #FF6600 !important; }
+        /* Individual Module Card in Directory (Image 1) */
+        .module-item-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #11141a;
+            border: 1px solid #1f2530;
+            border-radius: 14px;
+            padding: 14px 18px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            user-select: none;
+        }
+        .module-item-card:hover {
+            background: #171b22;
+            border-color: #FF6600;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(255, 102, 0, 0.22);
+        }
+        .module-item-card:active {
+            transform: scale(0.99);
+        }
+        .module-item-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            min-width: 0;
+        }
+        .module-icon-box {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 12px;
+            border: 1.5px solid #FF6600;
+            background: rgba(255, 102, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FF6600;
+            box-shadow: 0 0 12px rgba(255, 102, 0, 0.2);
+        }
+        .module-item-text {
+            flex: 1;
+            min-width: 0;
+        }
+        .module-item-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .module-item-desc {
+            font-size: 0.82rem;
+            color: #9ca3af;
+            margin: 3px 0 0;
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .module-item-arrow {
+            color: #FF6600;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-left: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+        .module-item-card:hover .module-item-arrow {
+            transform: translateX(5px);
+        }
+
+        /* ===== ACTIVE MODULE TOP BAR ===== */
+        .module-view-topbar {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 5%;
+            background: #111111;
+            border-bottom: 2px solid #FF6600;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn-back-modules {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 102, 0, 0.12);
+            border: 1.5px solid #FF6600;
+            color: #FF6600;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 7px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .btn-back-modules:hover {
+            background: #FF6600;
+            color: #000000;
+        }
+        .module-counter-badge {
+            color: #cccccc;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: #1f1f1f;
+            border: 1px solid #333333;
+            padding: 5px 14px;
+            border-radius: 16px;
+        }
+        .module-nav-arrows {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-nav-step {
+            background: #1a1a1a;
+            border: 1.5px solid #333333;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 7px 16px;
+            border-radius: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .btn-nav-step:hover {
+            border-color: #FF6600;
+            color: #FF6600;
+        }
+        .module-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 36px;
+            padding-top: 24px;
+            border-top: 1px solid #2a2a2a;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .module-directory {
+                padding: 16px 12px 36px;
+            }
+            .module-item-card {
+                padding: 12px 14px;
+            }
+            .module-icon-box {
+                width: 40px;
+                height: 40px;
+                min-width: 40px;
+            }
+            .module-item-title {
+                font-size: 0.95rem;
+            }
+            .module-item-desc {
+                font-size: 0.76rem;
+            }
+            .module-view-topbar {
+                padding: 10px 14px;
+            }
+            .btn-back-modules {
+                padding: 5px 12px;
+                font-size: 0.8rem;
+            }
+            .module-counter-badge {
+                font-size: 0.78rem;
+                padding: 4px 10px;
+            }
+            .btn-nav-step {
+                padding: 5px 12px;
+                font-size: 0.8rem;
+            }
+        }
+
     </style>
 </head>
 <body style="background:#0d0d0d;">
     <div class="app-layout">
         <!-- Sidebar -->
+                                <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <div class="logo">DCodex</div>
-            <ul class="nav-links">
+            <div class="sidebar-header">
+                <div class="logo">DCodex</div>
+                <div class="mobile-actions">
+                    <div class="divine-blessing mobile-blessing">
+                        Sri Hethai Amman <span style="color: #ff66b2; font-size: 1.1rem;">☔</span>
+                    </div>
+                    <button class="menu-toggle" id="menu-toggle" onclick="toggleMenu(event)" aria-label="Toggle navigation">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                </div>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li class="menu-brand-header"><span class="menu-brand-title">DCodex</span></li>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="projects.html">Projects</a></li>
-                <li><a href="material.html" style="background:#FF6600;color:#000;">Material</a></li>
+                <li><a href="material.html" class="active">Material</a></li>
                 <li><a href="runcode.html">Run Code</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div class="divine-blessing" style="font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px;">
-                Sri Hethai Amman <span style="color:#ff66b2;font-size:1.2rem;">☔</span>
+            <div class="divine-blessing desktop-blessing">
+                Sri Hethai Amman <span style="color: #ff66b2; font-size: 1.2rem;">☔</span>
             </div>
         </aside>
+        <script>
+            function toggleMenu(e) {
+                if (e) e.stopPropagation();
+                var toggle = document.getElementById('menu-toggle');
+                var nav = document.getElementById('nav-links');
+                if (toggle && nav) {
+                    toggle.classList.toggle('open');
+                    var isOpen = nav.classList.toggle('open');
+                    if (isOpen) {
+                        document.body.classList.add('menu-open');
+                    } else {
+                        document.body.classList.remove('menu-open');
+                    }
+                }
+            }
+            document.addEventListener('click', function(e) {
+                var toggle = document.getElementById('menu-toggle');
+                var nav = document.getElementById('nav-links');
+                if (toggle && nav && !nav.contains(e.target) && !toggle.contains(e.target)) {
+                    toggle.classList.remove('open');
+                    nav.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        </script>
+        
 
         <!-- Main -->
         <main class="main-content" style="background:#0d0d0d;">
@@ -172,28 +464,375 @@
                 </div>
 
                 <!-- Module Navigator -->
-                <nav class="module-nav">
-                    <a href="#m1">1 · Intro</a>
-                    <a href="#m2">2 · Keywords & Variables</a>
-                    <a href="#m3">3 · Operators</a>
-                    <a href="#m4">4 · Input/Output</a>
-                    <a href="#m5">5 · Data Types</a>
-                    <a href="#m6">6 · Slicing</a>
-                    <a href="#m7">7 · Conditionals</a>
-                    <a href="#m8">8 · Loops</a>
-                    <a href="#m9">9 · Built-in Functions</a>
-                    <a href="#m10">10 · Lists</a>
-                    <a href="#m11">11 · Tuples</a>
-                    <a href="#m12">12 · Sets</a>
-                    <a href="#m13">13 · Dictionaries</a>
-                    <a href="#m14">14 · Strings</a>
-                    <a href="#m15">15 · Functions</a>
-                    <a href="#m16">16 · Comprehensions</a>
-                    <a href="#m17">17 · Modules & Packages</a>
-                    <a href="#m18">18 · File Handling</a>
-                    <a href="#m19">19 · OOP</a>
-                    <a href="#m20">20 · Exception Handling</a>
-                </nav>
+                
+                <!-- ==================== MODULES DIRECTORY (IMAGE 1 REFERENCE) ==================== -->
+                <div class="module-directory" id="modules-directory-view">
+                    <div class="directory-header">
+                        <div class="directory-title">
+                            <span>Select a Module to Learn</span>
+                            <span class="directory-badge">20 Modules</span>
+                        </div>
+                    </div>
+                    <div class="directory-grid">
+                        <div class="module-item-card" onclick="openModule('m1')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-3.3 0-5 1.5-5 3.5v2.5h5v1H6c-2 0-4 1.7-4 4s1.7 4 4 4h1.5v-2c0-1.7 1.3-3 3-3h5v-1h-5V5.5c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2V8h1.5c1.7 0 3-1.3 3-3V5.5C23 3.5 21.3 2 18 2h-6zm-1.5 2a1 1 0 110 2 1 1 0 010-2z"/><path d="M12 22c3.3 0 5-1.5 5-3.5v-2.5h-5v-1h6c2 0 4-1.7 4-4s-1.7-4-4-4h-1.5v2c0 1.7-1.3 3-3 3h-5v1h5v2.5c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2V16H6c-1.7 0-3 1.3-3 3v.5C3 20.5 4.7 22 8 22h4zm1.5-2a1 1 0 110-2 1 1 0 010 2z"/></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">1. Introduction</h3>
+                                    <p class="module-item-desc">What is Python? History, features and setup.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m2')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">2. Variables</h3>
+                                    <p class="module-item-desc">Understand variables and how to use them.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m3')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="3"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="10" y2="10"></line><line x1="14" y1="10" x2="16" y2="10"></line><line x1="8" y1="14" x2="10" y2="14"></line><line x1="14" y1="14" x2="16" y2="14"></line><line x1="8" y1="18" x2="16" y2="18"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">3. Operators</h3>
+                                    <p class="module-item-desc">Arithmetic, comparison, logical and assignment operators.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m4')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line><path d="M9 10l2 2-2 2"></path><line x1="13" y1="14" x2="16" y2="14"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">4. Input & Output</h3>
+                                    <p class="module-item-desc">Take input from users and display output.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m5')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">5. Data Types</h3>
+                                    <p class="module-item-desc">Numbers, strings, lists, tuples, dictionaries, etc.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m6')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">6. Slicing in Python</h3>
+                                    <p class="module-item-desc">Index slicing on strings, lists, tuples, and ranges.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m7')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">7. Conditionals</h3>
+                                    <p class="module-item-desc">If, elif, else statements and decision making.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m8')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l6.67-1.19"></path></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">8. Loops</h3>
+                                    <p class="module-item-desc">For and while loops with examples.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m9')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">9. Built-in Functions</h3>
+                                    <p class="module-item-desc">Type conversion, inspection, math, sequence utilities.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m10')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">10. Lists</h3>
+                                    <p class="module-item-desc">Ordered, mutable sequences, methods and comprehensions.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m11')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">11. Tuples</h3>
+                                    <p class="module-item-desc">Ordered, immutable collections, indexing and packing.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m12')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="6"></circle><circle cx="15" cy="12" r="6"></circle></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">12. Sets & Frozensets</h3>
+                                    <p class="module-item-desc">Unordered, unique collections and set math operations.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m13')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">13. Dictionaries</h3>
+                                    <p class="module-item-desc">Key-value pairs, hash maps, methods and lookups.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m14')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">14. Strings</h3>
+                                    <p class="module-item-desc">Immutable text, string methods, formatting and escaping.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m15')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20v-8a4 4 0 0 1 4-4h4"></path><line x1="6" y1="12" x2="14" y2="12"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">15. Functions</h3>
+                                    <p class="module-item-desc">def, return, lambda, enumerate, zip, map, filter.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m16')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3"></path><path d="M16 4h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3"></path><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">16. Comprehensions</h3>
+                                    <p class="module-item-desc">List, set, dictionary and generator expressions.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m17')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">17. Modules & Packages</h3>
+                                    <p class="module-item-desc">import, built-in libraries, packages and project structure.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m18')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">18. File Handling</h3>
+                                    <p class="module-item-desc">Reading, writing, appending files with context managers.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m19')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">19. Object-Oriented Programming</h3>
+                                    <p class="module-item-desc">Classes, objects, inheritance, polymorphism, OOP.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="module-item-card" onclick="openModule('m20')">
+                            <div class="module-item-left">
+                                <div class="module-icon-box">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                </div>
+                                <div class="module-item-text">
+                                    <h3 class="module-item-title">20. Exception Handling</h3>
+                                    <p class="module-item-desc">try, except, else, finally, raise and custom exceptions.</p>
+                                </div>
+                            </div>
+                            <div class="module-item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== ACTIVE MODULE TOP BAR ==================== -->
+                <div class="module-view-topbar" id="module-view-topbar">
+                    <button class="btn-back-modules" onclick="showDirectory()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        <span>All Modules</span>
+                    </button>
+                    <span class="module-counter-badge" id="module-current-counter">Module 1 of 20</span>
+                    <div class="module-nav-arrows">
+                        <button class="btn-nav-step" id="btn-prev-mod" onclick="stepModule(-1)" title="Previous Module">← Prev</button>
+                        <button class="btn-nav-step" id="btn-next-mod" onclick="stepModule(1)" title="Next Module">Next →</button>
+                    </div>
+                </div>
+
 
                 <!-- ==================== CONTENT ==================== -->
                 <div class="material-content">
@@ -260,8 +899,14 @@
                             <div class="interview-box">
                                 <strong>🎤 One-Line Interview Answer</strong>
                                 <span>Python is popular because of its simple syntax, powerful libraries, and wide use in AI, Data Science, and automation.</span>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <span></span>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m2')">2. Variables →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 2 -->
@@ -311,8 +956,14 @@ name = "Naveen"
                                     <tr><td><span class="badge badge-orange">Variable</span></td><td>Stores value</td><td><code>age = 20</code></td></tr>
                                     <tr><td><span class="badge badge-green">Identifier</span></td><td>Name of element</td><td><code>age</code>, <code>sum()</code></td></tr>
                                 </table>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m1')">← 1. Introduction</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m3')">3. Operators →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 3 -->
@@ -345,9 +996,9 @@ name = "Naveen"
                                 <pre><code class="language-python">5 == 5    # True  — Equal to
 5 != 3    # True  — Not equal
 10 > 5    # True  — Greater than
-10 < 5    # False — Less than
+10 &lt; 5    # False — Less than
 5 >= 5    # True  — Greater than or equal
-2 <= 1    # False — Less than or equal</code></pre>
+2 &lt;= 1    # False — Less than or equal</code></pre>
                             </div>
                             <hr class="divider">
                             <div class="topic">
@@ -405,8 +1056,14 @@ a ^ b   # XOR  — 1 if only one bit is 1
                                     <li>Using only bitwise operators, compute <code>x * 10</code>. Hint: <code>(x&lt;&lt;3) + (x&lt;&lt;1)</code></li>
                                     <li>Check palindrome using slicing: return <code>"PALIN"</code> or <code>"NOT"</code> using operator expressions.</li>
                                 </ol>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m2')">← 2. Variables</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m4')">4. Input & Output →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 4 -->
@@ -433,8 +1090,15 @@ age = int(input("Enter your age: "))
 a = int(input("Enter a: "))
 b = int(input("Enter b: "))
 print(a + b)</code></pre>
-                                <div class="warn-box">⚠️ Common Mistake: <code>input()</code> always returns a string! Use <code>int()</code> or <code>float()</code> to convert.</div>
+                                <div class="warn-box">⚠️ Common Mistake: <code>input()</code> always returns a string! Use <code>int()</code> or <code>float()</code> to convert.
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m3')">← 3. Operators</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m5')">5. Data Types →</button>
                             </div>
+                        </div>
+                    </div>
                             <hr class="divider">
                             <div class="topic">
                                 <h3>📤 Output Statement</h3>
@@ -516,8 +1180,14 @@ fs = frozenset({1, 2, 3})         # frozenset (immutable)
 ba = bytearray([65, 66])          # bytearray (mutable)
 mv = memoryview(b"ABC")           # memoryview
 x = None                           # NoneType</code></pre>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m4')">← 4. Input & Output</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m6')">6. Slicing in Python →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 6 -->
@@ -547,8 +1217,15 @@ print(s[:3])    # 'PYT'
 print(s[3:])    # 'HON'
 print(s[-1])    # 'N'
 print(s[::-1])  # 'NOHTYP' (reverse)</code></pre>
-                                <div class="info-box">Strings are <strong>immutable</strong> — cannot change characters after creation.</div>
+                                <div class="info-box">Strings are <strong>immutable</strong> — cannot change characters after creation.
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m5')">← 5. Data Types</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m7')">7. Conditionals →</button>
                             </div>
+                        </div>
+                    </div>
                             <div class="topic">
                                 <h3>📋 List Slicing (Mutable)</h3>
                                 <pre><code class="language-python">l = [10, 20, 30, 40, 50]
@@ -657,8 +1334,14 @@ print(result)  # Positive</code></pre>
                                     <tr><td>Nested if</td><td>Condition inside condition</td></tr>
                                     <tr><td>Ternary</td><td>One-line condition</td></tr>
                                 </table>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m6')">← 6. Slicing in Python</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m8')">8. Loops →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 8 -->
@@ -690,13 +1373,13 @@ for f in fruits:
                                 <p>Repeats as long as condition is <code>True</code>.</p>
                                 <pre><code class="language-python"># Print 1 to 5
 i = 1
-while i <= 5:
+while i &lt;= 5:
     print(i)
     i += 1
 
 # Sum of first 5 numbers
 i, total = 1, 0
-while i <= 5:
+while i &lt;= 5:
     total += i
     i += 1
 print("Sum =", total)  # Sum = 15
@@ -725,8 +1408,14 @@ print("Reversed =", rev)  # 4321</code></pre>
         break     # stop at 5
     print(i)
 # Output: 1 2 4</code></pre>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m7')">← 7. Conditionals</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m9')">9. Built-in Functions →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 9 -->
@@ -797,8 +1486,14 @@ print("Reversed =", rev)  # 4321</code></pre>
                                 <h3>🔡 5. Binary &amp; Character</h3>
                                 <pre><code class="language-python">chr(65)    # → 'A'  — int to Unicode character
 ord('A')   # → 65   — character to integer code</code></pre>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m8')">← 8. Loops</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m10')">10. Lists →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 10 -->
@@ -865,8 +1560,14 @@ even = [x for x in range(10) if x % 2 == 0]
                                     <tr><td><code>ValueError</code></td><td>Value not found</td></tr>
                                     <tr><td><code>TypeError</code></td><td>Wrong data type</td></tr>
                                 </table>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m9')">← 9. Built-in Functions</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m11')">11. Tuples →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 11 -->
@@ -919,8 +1620,14 @@ d = {(1,2): "point A", (3,4): "point B"}
 # Unpacking
 a, *b = (10, 20, 30, 40)
 # a=10, b=[20,30,40]</code></pre>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m10')">← 10. Lists</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m12')">12. Sets & Frozensets →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 12 -->
@@ -969,8 +1676,14 @@ print(a | b)  # frozenset({1,2,3,4,5})
 
 # Use as dictionary key (hashable)
 d = {frozenset([1,2]): "pair one-two"}</code></pre>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m11')">← 11. Tuples</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m13')">13. Dictionaries →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 13 -->
@@ -1018,8 +1731,14 @@ print(max(student.values()))     # 90
 print(min(student.values()))     # 85
 print(sorted(student))           # sorted list of keys
 print(str(student))              # string representation</code></pre>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m12')">← 12. Sets & Frozensets</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m14')">14. Strings →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 14 -->
@@ -1095,8 +1814,14 @@ b = bytearray(b"Hello")        # bytearray (mutable)
 b[0] = 65                      # change first byte → b'Aello'
 m = memoryview(bytes([10,20,30]))
 print(m[1])                    # 20 — no copy of data</code></pre>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m13')">← 13. Dictionaries</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m15')">15. Functions →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 15 -->
@@ -1195,8 +1920,14 @@ print(list(result))  # [4, 5]
 # Only even numbers
 evens = filter(lambda x: x % 2 == 0, nums)
 print(list(evens))   # [2, 4]</code></pre>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m14')">← 14. Strings</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m16')">16. Comprehensions →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 16 -->
@@ -1229,8 +1960,14 @@ print(list(gen))   # [0, 1, 4, 9, 16]</code></pre>
                             <div class="interview-box">
                                 <strong>🎤 One-Line Interview Answer</strong>
                                 <span>Python comprehensions (list, set, dict, and generator) provide a concise way to create collections in a single line of code.</span>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m15')">← 15. Functions</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m17')">17. Modules & Packages →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 17 -->
@@ -1294,8 +2031,14 @@ print(add(10, 5))  # 15</code></pre>
                                     <tr><td><code>Module</code></td><td>A single <code>.py</code> file</td></tr>
                                     <tr><td><code>Package</code></td><td>A folder with multiple modules</td></tr>
                                 </table>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m16')">← 16. Comprehensions</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m18')">18. File Handling →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 18 -->
@@ -1360,8 +2103,14 @@ os.remove("demo.txt")</code></pre>
                                     <tr><td><code>f.tell()</code></td><td>Current cursor position</td></tr>
                                     <tr><td><code>f.close()</code></td><td>Close file</td></tr>
                                 </table>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m17')">← 17. Modules & Packages</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m19')">19. Object-Oriented Programming →</button>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <!-- MODULE 19 -->
@@ -1390,8 +2139,15 @@ os.remove("demo.txt")</code></pre>
 s1 = Student("Naveen", 90)
 s2 = Student("Kumar", 85)
 s1.show()  # Name: Naveen, Marks: 90</code></pre>
-                                <div class="info-box"><code>self</code> refers to the current object. Without it, Python doesn't know which object's data we're accessing.</div>
+                                <div class="info-box"><code>self</code> refers to the current object. Without it, Python doesn't know which object's data we're accessing.
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m18')">← 18. File Handling</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <button class="btn-nav-step" onclick="openModule('m20')">20. Exception Handling →</button>
                             </div>
+                        </div>
+                    </div>
                             <hr class="divider">
                             <div class="topic">
                                 <h3>🔨 Constructor</h3>
@@ -1517,7 +2273,7 @@ process(PhonePe())    # Paid ₹500 using PhonePe</code></pre>
                                 <h3>⚡ Generators</h3>
                                 <pre><code class="language-python">def count_up_to(n):
     count = 1
-    while count <= n:
+    while count &lt;= n:
         yield count   # pauses and returns value
         count += 1
 
@@ -1595,7 +2351,7 @@ finally:
                             <div class="topic">
                                 <h3>🚀 raise — Manually Throw Exception</h3>
                                 <pre><code class="language-python">age = int(input("Enter age: "))
-if age < 18:
+if age &lt; 18:
     raise ValueError("Age must be 18 or above")
 print("Eligible")</code></pre>
                             </div>
@@ -1621,8 +2377,14 @@ except LowBalanceError as e:
                                     <li>Open a file named <code>data.txt</code> and handle <code>FileNotFoundError</code>.</li>
                                     <li>Write a program that handles both <code>ZeroDivisionError</code> and <code>ValueError</code>.</li>
                                 </ol>
+                            <!-- Bottom Module Navigation -->
+                            <div class="module-bottom-nav">
+                                <button class="btn-nav-step" onclick="openModule('m19')">← 19. Object-Oriented Programming</button>
+                                <button class="btn-back-modules" onclick="showDirectory()">↑ All Modules</button>
+                                <span></span>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                 </div><!-- end material-content -->
@@ -1630,10 +2392,13 @@ except LowBalanceError as e:
                 <!-- Footer -->
                 <footer>
                     <div class="contact-links">
+                        <a href="https://www.linkedin.com/in/dhanush-d-88155640a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">LinkedIn</a>
                         <a href="https://github.com/dhanushdevaraj10-glitch" target="_blank">GitHub</a>
-                        <a href="https://www.linkedin.com/in/dhanush-d-88155640a" target="_blank">LinkedIn</a>
+                        <a href="https://www.instagram.com/__dhan.zz_?igsh=MTZqeHcxMDd2a3RibA==" target="_blank">Instagram</a>
+                        <a href="https://youtube.com/@dhanushdevaraj-n2v?si=GWrMFSw08q89Uqwl" target="_blank">YouTube</a>
+                        <a href="https://discordapp.com/users/1516060739385688197" target="_blank">Discord</a>
                     </div>
-                    <p>© 2026 DCodex. All rights reserved.</p>
+                    <p>&copy; 2026 DCodex. All rights reserved.</p>
                 </footer>
 
             </div><!-- end material-layout -->
@@ -1655,5 +2420,123 @@ except LowBalanceError as e:
         // Open first module by default
         document.querySelector('.module-body.open') && null;
     </script>
+    <script type="module" src="main.js"></script>
+
+    <script>
+        const ALL_MODULES = [
+            'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15', 'm16', 'm17', 'm18', 'm19', 'm20'
+        ];
+
+        let currentActiveModule = null;
+
+        function openModule(moduleId) {
+            const modIndex = ALL_MODULES.indexOf(moduleId);
+            if (modIndex === -1) return;
+
+            currentActiveModule = moduleId;
+
+            // 1. Hide Directory View
+            const dir = document.getElementById('modules-directory-view');
+            if (dir) dir.style.display = 'none';
+
+            // 2. Hide Hero when viewing module for full focus (or keep it compact)
+            const hero = document.querySelector('.material-hero');
+            if (hero) hero.style.display = 'none';
+
+            // 3. Show Topbar
+            const topbar = document.getElementById('module-view-topbar');
+            if (topbar) {
+                topbar.style.display = 'flex';
+                const counter = document.getElementById('module-current-counter');
+                if (counter) counter.innerText = 'Module ' + (modIndex + 1) + ' of ' + ALL_MODULES.length;
+
+                // Update Prev/Next button states
+                const prevBtn = document.getElementById('btn-prev-mod');
+                const nextBtn = document.getElementById('btn-next-mod');
+                if (prevBtn) {
+                    prevBtn.style.visibility = modIndex > 0 ? 'visible' : 'hidden';
+                }
+                if (nextBtn) {
+                    nextBtn.style.visibility = modIndex < ALL_MODULES.length - 1 ? 'visible' : 'hidden';
+                }
+            }
+
+            // 4. Show only the active module card and ensure it is open
+            const allCards = document.querySelectorAll('.module-card');
+            allCards.forEach(card => {
+                if (card.id === moduleId) {
+                    card.style.display = 'block';
+                    const body = card.querySelector('.module-body');
+                    const toggle = card.querySelector('.module-toggle');
+                    if (body) body.classList.add('open');
+                    if (toggle) toggle.classList.add('open');
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // 5. Update URL hash without causing erratic scrolling
+            if (window.location.hash !== '#' + moduleId) {
+                history.pushState(null, null, '#' + moduleId);
+            }
+
+            // 6. Scroll smoothly to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showDirectory() {
+            currentActiveModule = null;
+
+            // 1. Show Directory View
+            const dir = document.getElementById('modules-directory-view');
+            if (dir) dir.style.display = 'block';
+
+            // 2. Restore Hero
+            const hero = document.querySelector('.material-hero');
+            if (hero) hero.style.display = 'block';
+
+            // 3. Hide Topbar
+            const topbar = document.getElementById('module-view-topbar');
+            if (topbar) topbar.style.display = 'none';
+
+            // 4. Hide all module cards
+            const allCards = document.querySelectorAll('.module-card');
+            allCards.forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // 5. Clear URL hash
+            if (window.location.hash) {
+                history.pushState(null, null, window.location.pathname);
+            }
+
+            // 6. Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function stepModule(direction) {
+            if (!currentActiveModule) return;
+            const currentIndex = ALL_MODULES.indexOf(currentActiveModule);
+            const nextIndex = currentIndex + direction;
+            if (nextIndex >= 0 && nextIndex < ALL_MODULES.length) {
+                openModule(ALL_MODULES[nextIndex]);
+            }
+        }
+
+        // Initialize view based on URL hash or default to directory
+        function handleRoute() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && ALL_MODULES.includes(hash)) {
+                openModule(hash);
+            } else {
+                showDirectory();
+            }
+        }
+
+        window.addEventListener('popstate', handleRoute);
+        window.addEventListener('DOMContentLoaded', handleRoute);
+        handleRoute();
+    </script>
+
 </body>
 </html>

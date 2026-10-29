@@ -4,6 +4,7 @@ let editor;
 let pyodideInstance = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
+    initMobileMenu();
     
     // Check which page we are on based on existing containers
     const hasEditor = document.getElementById('monaco-container') !== null;
@@ -175,3 +176,57 @@ function scrollToBottom() {
     const box = document.querySelector('.console-box');
     box.scrollTop = box.scrollHeight;
 }
+
+// Mobile Menu Toggle
+function initMobileMenu() {
+    const toggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    if (!toggle || !navLinks) return;
+
+    // Toggle open state on button click
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggle.classList.toggle('open');
+        const isOpen = navLinks.classList.toggle('open');
+        if (isOpen) {
+            document.body.classList.add('menu-open');
+        } else {
+            document.body.classList.remove('menu-open');
+        }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !toggle.contains(e.target)) {
+            toggle.classList.remove('open');
+            navLinks.classList.remove('open');
+            document.body.classList.remove('menu-open');
+        }
+    });
+
+    // Close menu when clicking any link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            toggle.classList.remove('open');
+            navLinks.classList.remove('open');
+            document.body.classList.remove('menu-open');
+        });
+    });
+}
+
+if (document.readyState === 'complete' || document.readyState === 'interactive') { initMobileMenu(); }
+
+window.toggleMenu = function(e) {
+    if (e) e.stopPropagation();
+    const toggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    if (toggle && navLinks) {
+        toggle.classList.toggle('open');
+        const isOpen = navLinks.classList.toggle('open');
+        if (isOpen) {
+            document.body.classList.add('menu-open');
+        } else {
+            document.body.classList.remove('menu-open');
+        }
+    }
+};

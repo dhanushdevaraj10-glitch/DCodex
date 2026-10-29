@@ -13,20 +13,59 @@
 </head>
 <body>
     <div class="app-layout">
-        <!-- Sidebar Navigation -->
+                                <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <div class="logo">DCodex</div>
-            <ul class="nav-links">
+            <div class="sidebar-header">
+                <div class="logo">DCodex</div>
+                <div class="mobile-actions">
+                    <div class="divine-blessing mobile-blessing">
+                        Sri Hethai Amman <span style="color: #ff66b2; font-size: 1.1rem;">☔</span>
+                    </div>
+                    <button class="menu-toggle" id="menu-toggle" onclick="toggleMenu(event)" aria-label="Toggle navigation">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                </div>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li class="menu-brand-header"><span class="menu-brand-title">DCodex</span></li>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
                 <li><a href="material.html">Material</a></li>
                 <li><a href="runcode.html">Run Code</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div class="divine-blessing" style="font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <div class="divine-blessing desktop-blessing">
                 Sri Hethai Amman <span style="color: #ff66b2; font-size: 1.2rem;">☔</span>
             </div>
         </aside>
+        <script>
+            function toggleMenu(e) {
+                if (e) e.stopPropagation();
+                var toggle = document.getElementById('menu-toggle');
+                var nav = document.getElementById('nav-links');
+                if (toggle && nav) {
+                    toggle.classList.toggle('open');
+                    var isOpen = nav.classList.toggle('open');
+                    if (isOpen) {
+                        document.body.classList.add('menu-open');
+                    } else {
+                        document.body.classList.remove('menu-open');
+                    }
+                }
+            }
+            document.addEventListener('click', function(e) {
+                var toggle = document.getElementById('menu-toggle');
+                var nav = document.getElementById('nav-links');
+                if (toggle && nav && !nav.contains(e.target) && !toggle.contains(e.target)) {
+                    toggle.classList.remove('open');
+                    nav.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        </script>
+        
 
         <!-- Main Content Area -->
         <main class="main-content">
